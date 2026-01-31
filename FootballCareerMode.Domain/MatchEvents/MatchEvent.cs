@@ -8,11 +8,12 @@ namespace FootballCareerMode.Domain.MatchEvents
 {
     public class MatchEvent
     {
-        public Guid Id { get; }
-        public Guid MatchId { get; }
-        public string PlayerName { get; }
-        public int? Minute { get; }
+        public Guid Id { get; private set; }
+        public Guid MatchId { get; private set; }
+        public string PlayerName { get; private set; }
+        public int? Minute { get; private set; }
 
+        private MatchEvent() { }
         public MatchEvent(Guid id, Guid matchId, string playerName, int? minute)
         {
             if (id == Guid.Empty)

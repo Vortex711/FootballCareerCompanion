@@ -9,15 +9,16 @@ namespace FootballCareerMode.Domain.Narratives
 
     public class NarrativeSnapshot
     {
-        public Guid Id { get; }
-        public Guid? MatchId { get; }
-        public Guid? SeasonId { get; }
-        public string Type { get; }
-        public string Content { get; }
-        public string PromptVersion { get; }
-        public string ModelVersion { get; }
-        public DateTime GeneratedAt { get; }
+        public Guid Id { get; private set; }
+        public Guid? MatchId { get; private set; }
+        public Guid? SeasonId { get; private set; }
+        public string Type { get; private set; }
+        public string Content { get; private set; }
+        public string PromptVersion { get; private set; }
+        public string ModelVersion { get; private set; }
+        public DateTime GeneratedAt { get; private set; }
 
+        private NarrativeSnapshot() { }
         public NarrativeSnapshot(
             Guid id,
             Guid? matchId,

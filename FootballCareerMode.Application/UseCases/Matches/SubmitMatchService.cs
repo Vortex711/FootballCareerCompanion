@@ -21,6 +21,10 @@ namespace FootballCareerMode.Application.UseCases.Matches
 
         public async Task<Guid> SubmitAsync(SubmitMatchRequest request)
         {
+            var normalizedPlayedAt = DateTime.SpecifyKind(
+                request.PlayedAt,
+                DateTimeKind.Utc
+            );
             //1.Load Season
             var season = await _seasonRepository.GetByIdAsync(request.SeasonId);
             if (season == null)
@@ -31,7 +35,7 @@ namespace FootballCareerMode.Application.UseCases.Matches
                 request.SeasonId,
                 request.CompetitionName,
                 request.OpponentName,
-                request.PlayedAt);
+                normalizedPlayedAt);
 
             if (exists)
                 throw new InvalidOperationException("Duplicate match submission.");
@@ -45,7 +49,7 @@ namespace FootballCareerMode.Application.UseCases.Matches
                 isHome: request.IsHome,
                 teamGoals: request.TeamGoals,
                 opponentGoals: request.OpponentGoals,
-                playedAt: request.PlayedAt,
+                playedAt: normalizedPlayedAt,
                 createdAt: DateTime.UtcNow);
 
             //4.Add Goal Events (optional)

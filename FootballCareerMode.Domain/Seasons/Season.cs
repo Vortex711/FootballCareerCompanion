@@ -1,4 +1,5 @@
-﻿using FootballCareerMode.Domain.Matches;
+﻿using FootballCareerMode.Domain.Careers;
+using FootballCareerMode.Domain.Matches;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +10,18 @@ namespace FootballCareerMode.Domain.Seasons
 {
     public class Season
     {
-        public Guid Id { get; }
-        public Guid CareerId { get; }
-        public string Name { get; }
-        public DateTime? StartDate { get; }
+        public Guid Id { get; private set; }
+        public Guid CareerId { get; private set; }
+        public Career Career { get; private set; } = null!;
+        public string Name { get; private set; }
+        public DateTime? StartDate { get; private set; }
         public DateTime? EndDate { get; private set; }
-        public DateTime CreatedAt { get; }
+        public DateTime CreatedAt { get; private set; }
 
         private readonly List<Match> _matches = new();
         public IReadOnlyCollection<Match> Matches => _matches.AsReadOnly();
 
+        private Season() { }
         public Season(
             Guid id, 
             Guid careerId, 

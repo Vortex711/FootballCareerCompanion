@@ -9,13 +9,15 @@ namespace FootballCareerMode.Domain.Careers
 {
     public class Career
     {
-        public Guid Id { get; }
-        public string Name { get; }
-        public string ClubName { get; }
-        public DateTime CreatedAt { get; }
+        public Guid Id { get; private set; }
+        public string Name { get; private set; }
+        public string ClubName { get; private set; }
+        public DateTime CreatedAt { get; private set; }
 
         private readonly List<Season> _seasons = new();
         public IReadOnlyCollection<Season> Seasons => _seasons.AsReadOnly();
+
+        private Career() { }
 
         public Career (Guid id, string name, string clubName, DateTime createdAt) 
         {

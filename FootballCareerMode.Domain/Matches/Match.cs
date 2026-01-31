@@ -9,19 +9,20 @@ namespace FootballCareerMode.Domain.Matches
 {
     public class Match
     {
-        public Guid Id { get; }
-        public Guid SeasonId { get; }
-        public string CompetitionName { get; }
-        public string OpponentName { get; }
-        public bool IsHome { get; }
-        public int TeamGoals { get; }
-        public int OpponentGoals { get; }
-        public DateTime PlayedAt { get; }
-        public DateTime CreatedAt { get; }
+        public Guid Id { get; private set; }
+        public Guid SeasonId { get; private set; }
+        public string CompetitionName { get; private set; }
+        public string OpponentName { get; private set; }
+        public bool IsHome { get; private set; }
+        public int TeamGoals { get; private set; }
+        public int OpponentGoals { get; private set; }
+        public DateTime PlayedAt { get; private set; }
+        public DateTime CreatedAt { get; private set; }
 
         private readonly List<MatchEvent> _events = new();
         public IReadOnlyCollection<MatchEvent> Events => _events.AsReadOnly();
 
+        private Match() { }
         public Match(
             Guid id,
             Guid seasonId,

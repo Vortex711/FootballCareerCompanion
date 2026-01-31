@@ -44,7 +44,7 @@ namespace FootballCareerMode.Infrastructure.Repositories
                 m.SeasonId == seasonId &&
                 m.CompetitionName == competitionName &&
                 m.OpponentName == opponentName &&
-                m.PlayedAt == m.PlayedAt);
+                m.PlayedAt == playedAt.ToUniversalTime());
         }
     }
 }
