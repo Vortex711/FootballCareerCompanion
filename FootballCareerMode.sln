@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36811.4 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballCareerMode.Api", "FootballCareerMode.Api\FootballCareerMode.Api.csproj", "{826D6074-B895-40E2-8488-1446CE559190}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballCareerMode.Domain", "FootballCareerMode.Domain\FootballCareerMode.Domain.csproj", "{B6A6AAB7-522B-447D-B5C6-6C955E8030E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{826D6074-B895-40E2-8488-1446CE559190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{826D6074-B895-40E2-8488-1446CE559190}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{826D6074-B895-40E2-8488-1446CE559190}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{826D6074-B895-40E2-8488-1446CE559190}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6A6AAB7-522B-447D-B5C6-6C955E8030E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6A6AAB7-522B-447D-B5C6-6C955E8030E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6A6AAB7-522B-447D-B5C6-6C955E8030E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6A6AAB7-522B-447D-B5C6-6C955E8030E3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9362E7E1-D173-4B41-8CC1-537729B7839E}
+	EndGlobalSection
+EndGlobal
