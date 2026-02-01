@@ -53,6 +53,27 @@ namespace FootballCareerMode.Domain.Narratives
             ModelVersion = modelVersion;
             GeneratedAt = generatedAt;
         }
+
+        public static NarrativeSnapshot ForMatch(
+    Guid matchId,
+    string content,
+    string promptVersion,
+    string modelVersion)
+        {
+            if (matchId == Guid.Empty)
+                throw new ArgumentException("MatchId cannot be empty.");
+
+            return new NarrativeSnapshot(
+                id: Guid.NewGuid(),
+                matchId: matchId,
+                seasonId: null,
+                type: "MatchReport",
+                content: content,
+                promptVersion: promptVersion,
+                modelVersion: modelVersion,
+                generatedAt: DateTime.UtcNow
+            );
+        }
     }
 
 }

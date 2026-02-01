@@ -10,10 +10,12 @@ namespace FootballCareerMode.Api.Controllers
     public class MatchesController : ControllerBase
     {
         private readonly SubmitMatchService _submitMatchService;
+        private readonly GetMatchNarrativeService _getMatchNarrativeService;
 
-        public MatchesController(SubmitMatchService submitMatchService)
+        public MatchesController(SubmitMatchService submitMatchService, GetMatchNarrativeService getMatchNarrativeService)
         {
             _submitMatchService = submitMatchService;
+            _getMatchNarrativeService = getMatchNarrativeService;
         }
 
         [HttpPost]
@@ -31,5 +33,21 @@ namespace FootballCareerMode.Api.Controllers
                 new { matchId },
                 new { matchId }));
         }
+
+        [HttpGet("{matchId}/narrative")]
+        public async Task<IActionResult> GetMatchNarrative(Guid matchId)
+        {
+            var narrative = await _getMatchNarrativeService.GetNarrativeAsync(matchId);
+
+            if (narrative == null)
+                return NotFound("Narrative not generated yet.");
+
+            return Ok(new
+            {
+                MatchId = matchId,
+                Narrative = narrative
+            });
+        }
+
     }
 }

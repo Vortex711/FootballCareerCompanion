@@ -1,6 +1,12 @@
+using FootballCareerMode.Application.AI;
+using FootballCareerMode.Application.AI.Generators;
+using FootballCareerMode.Application.AI.Inputs;
+using FootballCareerMode.Application.AI.PromptBuilders;
+using FootballCareerMode.Application.Interfaces.Repositories;
 using FootballCareerMode.Application.UseCases.Matches;
 using FootballCareerMode.Infrastructure;
 using FootballCareerMode.Infrastructure.Persistence;
+using FootballCareerMode.Infrastructure.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +20,14 @@ builder.Services.AddSwaggerGen();
 
 // Application services
 builder.Services.AddScoped<SubmitMatchService>();
+builder.Services.AddScoped<MatchNarrativeInputBuilder>();
+builder.Services.AddScoped<MatchReportPromptBuilder>();
+builder.Services.AddScoped<IMatchNarrativeGenerator, FakeMatchNarrativeGenerator>();
+builder.Services.AddScoped<MatchNarrativeOrchestrator>();
+builder.Services.AddScoped<INarrativeSnapshotRepository, NarrativeSnapshotRepository>();
+builder.Services.AddScoped<GetMatchNarrativeService>();
+
+
 
 // Infrastructure
 builder.Services.AddInfrastructure(

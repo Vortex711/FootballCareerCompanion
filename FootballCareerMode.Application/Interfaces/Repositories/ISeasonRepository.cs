@@ -17,5 +17,18 @@ namespace FootballCareerMode.Application.Interfaces.Repositories
             string competitionName,
             string opponentName,
             DateTime playedAt);
+        Task<Match?> GetMatchWithSeasonAsync(Guid matchId);
+        Task<IReadOnlyList<Match>> GetRecentMatchesAsync(
+            Guid seasonId,
+            DateTime before,
+            int count);
+
+        Task<IReadOnlyList<Match>> GetHeadToHeadMatchesAsync(
+            Guid careerId,
+            string opponentName,
+            DateTime before,
+            int limit
+        );
+
     }
 }

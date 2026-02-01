@@ -4,6 +4,7 @@ using FootballCareerMode.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballCareerMode.Infrastructure.Migrations
 {
     [DbContext(typeof(FootballCareerModeDbContext))]
-    partial class FootballCareerModeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260201064235_FixMatchSeasonMapping")]
+    partial class FixMatchSeasonMapping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

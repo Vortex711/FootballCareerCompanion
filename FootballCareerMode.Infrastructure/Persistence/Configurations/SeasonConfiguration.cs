@@ -15,11 +15,6 @@ namespace FootballCareerMode.Infrastructure.Persistence.Configurations
         {
             builder.HasKey(s => s.Id);
 
-            builder.HasMany(s => s.Matches)
-                .WithOne()
-                .HasForeignKey(m => m.SeasonId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             builder.HasOne(s => s.Career)
                .WithMany(c => c.Seasons)
                .HasForeignKey(s => s.CareerId)

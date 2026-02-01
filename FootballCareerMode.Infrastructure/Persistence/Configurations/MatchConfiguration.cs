@@ -19,7 +19,7 @@ namespace FootballCareerMode.Infrastructure.Persistence.Configurations
                 .IsRequired()
                 .HasMaxLength(200);
 
-            builder.Property(m => m.OpponentGoals)
+            builder.Property(m => m.OpponentName)
                 .IsRequired()
                 .HasMaxLength(200);
 
@@ -36,6 +36,13 @@ namespace FootballCareerMode.Infrastructure.Persistence.Configurations
                 .HasForeignKey(e => e.MatchId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Property(m => m.SeasonId)
+                .IsRequired();
+
+            builder.HasOne(m => m.Season)
+                .WithMany(s => s.Matches)
+                .HasForeignKey(m => m.SeasonId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -46,5 +46,45 @@ namespace FootballCareerMode.Infrastructure.Repositories
                 m.OpponentName == opponentName &&
                 m.PlayedAt == playedAt.ToUniversalTime());
         }
+
+        public async Task<Match?> GetMatchWithSeasonAsync(Guid matchId)
+        {
+            return await _db.Matches
+                .Include(m => m.Events)
+                .Include(m => m.Season)
+                .ThenInclude(s => s.Career)
+                .FirstOrDefaultAsync(m => m.Id == matchId);
+        }
+
+        public async Task<IReadOnlyList<Match>> GetRecentMatchesAsync(
+            Guid seasonId,
+            DateTime before,
+            int count)
+        {
+            return await _db.Matches
+                .Where(m => m.SeasonId == seasonId && m.PlayedAt < before)
+                .OrderByDescending(m => m.PlayedAt)
+                .Take(count)
+                .ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<Match>> GetHeadToHeadMatchesAsync(
+            Guid careerId,
+            string opponentName,
+            DateTime before,
+            int limit
+        )
+        {
+            return await _db.Matches
+                .Include(m => m.Season)
+                .Where(m =>
+                    m.Season.CareerId == careerId &&
+                    m.OpponentName == opponentName &&
+                    m.PlayedAt < before)
+                .OrderByDescending(m => m.PlayedAt)
+                .Take(limit)
+                .ToListAsync();
+        }
+
     }
 }

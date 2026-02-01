@@ -1,4 +1,5 @@
-﻿using FootballCareerMode.Application.DTOs.Matches;
+﻿using FootballCareerMode.Application.AI;
+using FootballCareerMode.Application.DTOs.Matches;
 using FootballCareerMode.Application.Interfaces.Repositories;
 using FootballCareerMode.Domain.Matches;
 using FootballCareerMode.Domain.MatchEvents;
@@ -13,10 +14,12 @@ namespace FootballCareerMode.Application.UseCases.Matches
     public class SubmitMatchService
     {
         private readonly ISeasonRepository _seasonRepository;
+        private readonly MatchNarrativeOrchestrator _narrativeOrchestrator;
 
-        public SubmitMatchService(ISeasonRepository seasonRepository)
+        public SubmitMatchService(ISeasonRepository seasonRepository, MatchNarrativeOrchestrator narrativeOrchestrator)
         {
             _seasonRepository = seasonRepository;
+            _narrativeOrchestrator = narrativeOrchestrator;
         }
 
         public async Task<Guid> SubmitAsync(SubmitMatchRequest request)
@@ -71,6 +74,23 @@ namespace FootballCareerMode.Application.UseCases.Matches
             season.AddMatch(match);
 
             await _seasonRepository.AddMatchAsync(match);
+
+            //_ = Task.Run(async () =>
+            //{
+            //    try
+            //    {
+            //        Console.WriteLine("AI background task started");
+            //        await _narrativeOrchestrator.GenerateForMatchAsync(match.Id);
+            //        Console.WriteLine("AI generation completed");
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Console.WriteLine(ex.ToString());
+            //    }
+            //});
+
+            await _narrativeOrchestrator.GenerateForMatchAsync(match.Id);
+
 
             return match.Id;
         }

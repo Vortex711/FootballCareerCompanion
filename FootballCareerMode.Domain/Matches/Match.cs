@@ -1,4 +1,5 @@
 ﻿using FootballCareerMode.Domain.MatchEvents;
+using FootballCareerMode.Domain.Seasons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace FootballCareerMode.Domain.Matches
     {
         public Guid Id { get; private set; }
         public Guid SeasonId { get; private set; }
+        public Season Season { get; private set; } = null!;
         public string CompetitionName { get; private set; }
         public string OpponentName { get; private set; }
         public bool IsHome { get; private set; }
