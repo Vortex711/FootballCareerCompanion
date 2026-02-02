@@ -23,6 +23,7 @@ namespace FootballCareerMode.Infrastructure.Repositories
         public async Task<Season?> GetByIdAsync(Guid seasonId)
         {
             return await _db.Seasons
+                .Include(s => s.Career)
                 .Include(s => s.Matches)
                 .ThenInclude(m => m.Events)
                 .FirstOrDefaultAsync(s => s.Id == seasonId);
@@ -85,6 +86,5 @@ namespace FootballCareerMode.Infrastructure.Repositories
                 .Take(limit)
                 .ToListAsync();
         }
-
     }
 }

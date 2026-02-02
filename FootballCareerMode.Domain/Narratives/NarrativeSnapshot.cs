@@ -55,10 +55,10 @@ namespace FootballCareerMode.Domain.Narratives
         }
 
         public static NarrativeSnapshot ForMatch(
-    Guid matchId,
-    string content,
-    string promptVersion,
-    string modelVersion)
+            Guid matchId,
+            string content,
+            string promptVersion,
+            string modelVersion)
         {
             if (matchId == Guid.Empty)
                 throw new ArgumentException("MatchId cannot be empty.");
@@ -74,6 +74,25 @@ namespace FootballCareerMode.Domain.Narratives
                 generatedAt: DateTime.UtcNow
             );
         }
+
+        public static NarrativeSnapshot ForSeason(
+            Guid seasonId,
+            string content,
+            string promptVersion,
+            string modelVersion)
+        {
+            return new NarrativeSnapshot(
+                id: Guid.NewGuid(),
+                matchId: null,
+                seasonId: seasonId,
+                type: "SeasonReport",
+                content: content,
+                promptVersion: promptVersion,
+                modelVersion: modelVersion,
+                generatedAt: DateTime.UtcNow
+            );
+        }
+
     }
 
 }

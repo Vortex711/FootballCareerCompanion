@@ -1,4 +1,5 @@
-﻿using FootballCareerMode.Application.AI.Generators;
+﻿using FootballCareerMode.Application.AI.Builders;
+using FootballCareerMode.Application.AI.Generators;
 using FootballCareerMode.Application.AI.PromptBuilders;
 using FootballCareerMode.Application.Interfaces.Repositories;
 using FootballCareerMode.Domain.Narratives;

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FootballCareerMode.Application.AI
+namespace FootballCareerMode.Application.AI.Builders
 {
     public class MatchNarrativeInputBuilder
     {

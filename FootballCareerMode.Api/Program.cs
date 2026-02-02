@@ -1,9 +1,10 @@
 using FootballCareerMode.Application.AI;
+using FootballCareerMode.Application.AI.Builders;
 using FootballCareerMode.Application.AI.Generators;
-using FootballCareerMode.Application.AI.Inputs;
 using FootballCareerMode.Application.AI.PromptBuilders;
 using FootballCareerMode.Application.Interfaces.Repositories;
 using FootballCareerMode.Application.UseCases.Matches;
+using FootballCareerMode.Application.UseCases.Seasons;
 using FootballCareerMode.Infrastructure;
 using FootballCareerMode.Infrastructure.Persistence;
 using FootballCareerMode.Infrastructure.Repositories;
@@ -19,20 +20,30 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Application services
+//   Submit Match
 builder.Services.AddScoped<SubmitMatchService>();
+
+//   Match Narrative
 builder.Services.AddScoped<MatchNarrativeInputBuilder>();
 builder.Services.AddScoped<MatchReportPromptBuilder>();
 builder.Services.AddScoped<IMatchNarrativeGenerator, FakeMatchNarrativeGenerator>();
 builder.Services.AddScoped<MatchNarrativeOrchestrator>();
-builder.Services.AddScoped<INarrativeSnapshotRepository, NarrativeSnapshotRepository>();
 builder.Services.AddScoped<GetMatchNarrativeService>();
 
+//   SeasonNarrative
+builder.Services.AddScoped<SeasonNarrativeInputBuilder>();
+builder.Services.AddScoped<SeasonReportPromptBuilder>();
+builder.Services.AddScoped<ISeasonNarrativeGenerator, FakeSeasonNarrativeGenerator>();
+builder.Services.AddScoped<SeasonNarrativeOrchestrator>();
+builder.Services.AddScoped<SeasonNarrativeService>();
 
-
-// Infrastructure
+//   Infrastructure
 builder.Services.AddInfrastructure(
     builder.Configuration.GetConnectionString("DefaultConnection")!
 );
+
+//   Snapshot Repository
+builder.Services.AddScoped<INarrativeSnapshotRepository, NarrativeSnapshotRepository>();
 
 var app = builder.Build();
 

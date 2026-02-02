@@ -10,4 +10,8 @@
     <ProjectReference Include="..\FootballCareerMode.Domain\FootballCareerMode.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\Seasons\" />
+  </ItemGroup>
+
 </Project>

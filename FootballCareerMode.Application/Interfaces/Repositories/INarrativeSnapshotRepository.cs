@@ -11,5 +11,7 @@ namespace FootballCareerMode.Application.Interfaces.Repositories
     {
         Task AddAsync(NarrativeSnapshot snapshot);
         Task<NarrativeSnapshot?> GetByMatchIdAsync(Guid matchId);
+        Task<NarrativeSnapshot?> GetBySeasonIdAsync(Guid matchId);
+
     }
 }

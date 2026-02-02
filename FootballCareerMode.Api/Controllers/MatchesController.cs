@@ -40,7 +40,7 @@ namespace FootballCareerMode.Api.Controllers
             var narrative = await _getMatchNarrativeService.GetNarrativeAsync(matchId);
 
             if (narrative == null)
-                return NotFound("Narrative not generated yet.");
+                return NotFound("Match narrative not generated yet.");
 
             return Ok(new
             {

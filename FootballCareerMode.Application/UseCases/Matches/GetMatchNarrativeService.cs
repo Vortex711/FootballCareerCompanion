@@ -1,4 +1,5 @@
-﻿using FootballCareerMode.Application.Interfaces.Repositories;
+﻿using FootballCareerMode.Application.AI;
+using FootballCareerMode.Application.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

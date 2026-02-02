@@ -30,5 +30,11 @@ namespace FootballCareerMode.Infrastructure.Repositories
             return await _db.NarrativeSnapshots
             .FirstOrDefaultAsync(n => n.MatchId == matchId);
         }
+
+        public async Task<NarrativeSnapshot?> GetBySeasonIdAsync(Guid seasonId)
+        {
+            return await _db.NarrativeSnapshots
+            .FirstOrDefaultAsync(n => n.SeasonId == seasonId);
+        }
     }
 }

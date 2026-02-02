@@ -1,11 +1,11 @@
-﻿using FootballCareerMode.Application.AI.Generators;
+﻿using FootballCareerMode.Application.AI.Inputs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FootballCareerMode.Application.AI.Inputs
+namespace FootballCareerMode.Application.AI.Generators
 {
      public class FakeMatchNarrativeGenerator : IMatchNarrativeGenerator
     {
