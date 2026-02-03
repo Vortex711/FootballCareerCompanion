@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36811.4 d17.14
+VisualStudioVersion = 17.14.36811.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballCareerMode.Api", "FootballCareerMode.Api\FootballCareerMode.Api.csproj", "{826D6074-B895-40E2-8488-1446CE559190}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballCareerCompanion.Api", "FootballCareerMode.Api\FootballCareerCompanion.Api.csproj", "{826D6074-B895-40E2-8488-1446CE559190}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballCareerMode.Domain", "FootballCareerMode.Domain\FootballCareerMode.Domain.csproj", "{B6A6AAB7-522B-447D-B5C6-6C955E8030E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballCareerCompanion.Domain", "FootballCareerMode.Domain\FootballCareerCompanion.Domain.csproj", "{B6A6AAB7-522B-447D-B5C6-6C955E8030E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballCareerMode.Application", "FootballCareerMode.Application\FootballCareerMode.Application.csproj", "{9B036621-5D64-4BC6-A3A0-B363507FB1A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballCareerCompanion.Application", "FootballCareerMode.Application\FootballCareerCompanion.Application.csproj", "{9B036621-5D64-4BC6-A3A0-B363507FB1A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballCareerMode.Infrastructure", "FootballCareerMode.Infrastructure\FootballCareerMode.Infrastructure.csproj", "{063DE06E-44A9-45A3-929A-C3A3546CFDF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballCareerCompanion.Infrastructure", "FootballCareerMode.Infrastructure\FootballCareerCompanion.Infrastructure.csproj", "{063DE06E-44A9-45A3-929A-C3A3546CFDF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

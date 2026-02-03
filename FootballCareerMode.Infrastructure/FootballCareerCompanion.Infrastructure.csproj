@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FootballCareerMode.Application\FootballCareerMode.Application.csproj" />
-    <ProjectReference Include="..\FootballCareerMode.Domain\FootballCareerMode.Domain.csproj" />
+    <ProjectReference Include="..\FootballCareerMode.Application\FootballCareerCompanion.Application.csproj" />
+    <ProjectReference Include="..\FootballCareerMode.Domain\FootballCareerCompanion.Domain.csproj" />
   </ItemGroup>
 
 </Project>
