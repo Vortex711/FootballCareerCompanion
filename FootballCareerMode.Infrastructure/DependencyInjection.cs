@@ -21,6 +21,7 @@ namespace FootballCareerMode.Infrastructure
             options.UseSqlServer(connectionString));
 
             services.AddScoped<ISeasonRepository, SeasonRepository>();
+            services.AddScoped<ICareerRepository, CareerRepository>();
 
             return services;
         }

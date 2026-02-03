@@ -12,10 +12,10 @@ namespace FootballCareerMode.Domain.Narratives
         public Guid Id { get; private set; }
         public Guid? MatchId { get; private set; }
         public Guid? SeasonId { get; private set; }
-        public string Type { get; private set; }
-        public string Content { get; private set; }
-        public string PromptVersion { get; private set; }
-        public string ModelVersion { get; private set; }
+        public string Type { get; private set; } = null!;
+        public string Content { get; private set; } = null!;
+        public string PromptVersion { get; private set; } = null!;
+        public string ModelVersion { get; private set; } = null!;
         public DateTime GeneratedAt { get; private set; }
 
         private NarrativeSnapshot() { }

@@ -13,7 +13,9 @@ namespace FootballCareerMode.Domain.Seasons
         public Guid Id { get; private set; }
         public Guid CareerId { get; private set; }
         public Career Career { get; private set; } = null!;
-        public string Name { get; private set; }
+        public string Name { get; private set; } = null!;
+        public BoardExpectation Expectation { get; private set; }
+        public int? LeaguePosition { get; private set; } 
         public DateTime? StartDate { get; private set; }
         public DateTime? EndDate { get; private set; }
         public DateTime CreatedAt { get; private set; }
@@ -23,11 +25,12 @@ namespace FootballCareerMode.Domain.Seasons
 
         private Season() { }
         public Season(
-            Guid id, 
-            Guid careerId, 
-            string name, 
-            DateTime? startDate, 
-            DateTime createdAt)
+            Guid id,
+            Guid careerId,
+            string name,
+            DateTime? startDate,
+            DateTime createdAt,
+            BoardExpectation expectation)
         {
             if (id == Guid.Empty)
                 throw new ArgumentException("Season ID cannot be empty.");
@@ -43,6 +46,7 @@ namespace FootballCareerMode.Domain.Seasons
             StartDate = startDate;
             Name = name;
             CreatedAt = createdAt;
+            Expectation = expectation;
         }
 
         public void EndSeason(DateTime endDate)
@@ -65,5 +69,13 @@ namespace FootballCareerMode.Domain.Seasons
 
             _matches.Add(match);
         }
+        public void UpdateLeaguePosition(int position)
+        {
+            if (position <= 0)
+                throw new ArgumentOutOfRangeException(nameof(position), "League position must be positive.");
+
+            LeaguePosition = position;
+        }
+
     }
 }

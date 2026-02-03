@@ -3,11 +3,13 @@ using FootballCareerMode.Application.AI.Builders;
 using FootballCareerMode.Application.AI.Generators;
 using FootballCareerMode.Application.AI.PromptBuilders;
 using FootballCareerMode.Application.Interfaces.Repositories;
+using FootballCareerMode.Application.UseCases.Careers;
 using FootballCareerMode.Application.UseCases.Matches;
 using FootballCareerMode.Application.UseCases.Seasons;
 using FootballCareerMode.Infrastructure;
 using FootballCareerMode.Infrastructure.Persistence;
 using FootballCareerMode.Infrastructure.Repositories;
+using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +24,8 @@ builder.Services.AddSwaggerGen();
 // Application services
 //   Submit Match
 builder.Services.AddScoped<SubmitMatchService>();
+//   Create Career
+builder.Services.AddScoped<CreateCareerService>();
 
 //   Match Narrative
 builder.Services.AddScoped<MatchNarrativeInputBuilder>();
@@ -44,6 +48,12 @@ builder.Services.AddInfrastructure(
 
 //   Snapshot Repository
 builder.Services.AddScoped<INarrativeSnapshotRepository, NarrativeSnapshotRepository>();
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.Converters.Add(
+            new JsonStringEnumConverter()));
+
 
 var app = builder.Build();
 

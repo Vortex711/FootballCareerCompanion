@@ -10,8 +10,9 @@ namespace FootballCareerMode.Domain.Careers
     public class Career
     {
         public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public string ClubName { get; private set; }
+        public string Name { get; private set; } = null!;
+        public string ClubName { get; private set; } = null!;
+        public string ManagerName { get; private set; } = null!;
         public DateTime CreatedAt { get; private set; }
 
         private readonly List<Season> _seasons = new();
@@ -19,7 +20,12 @@ namespace FootballCareerMode.Domain.Careers
 
         private Career() { }
 
-        public Career (Guid id, string name, string clubName, DateTime createdAt) 
+        public Career (
+            Guid id, 
+            string name, 
+            string clubName, 
+            string managerName,
+            DateTime createdAt) 
         {
             if (id == Guid.Empty)
                 throw new ArgumentException("Career ID cannot be empty.");
@@ -30,10 +36,14 @@ namespace FootballCareerMode.Domain.Careers
             if (string.IsNullOrWhiteSpace(clubName))
                 throw new ArgumentException("Club name is required.");
 
+            if (string.IsNullOrWhiteSpace(managerName))
+                throw new ArgumentException("Manager name is required.");
+
             Id = id;
             Name = name;
             ClubName = clubName;
             CreatedAt = createdAt;
+            ManagerName = managerName;
 
         }
 

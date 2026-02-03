@@ -10,7 +10,7 @@ namespace FootballCareerMode.Domain.MatchEvents
     {
         public Guid Id { get; private set; }
         public Guid MatchId { get; private set; }
-        public string PlayerName { get; private set; }
+        public string PlayerName { get; private set; } = null!;
         public int? Minute { get; private set; }
 
         private MatchEvent() { }

@@ -13,8 +13,8 @@ namespace FootballCareerMode.Domain.Matches
         public Guid Id { get; private set; }
         public Guid SeasonId { get; private set; }
         public Season Season { get; private set; } = null!;
-        public string CompetitionName { get; private set; }
-        public string OpponentName { get; private set; }
+        public string CompetitionName { get; private set; } = null!;
+        public string OpponentName { get; private set; } = null!;
         public bool IsHome { get; private set; }
         public int TeamGoals { get; private set; }
         public int OpponentGoals { get; private set; }

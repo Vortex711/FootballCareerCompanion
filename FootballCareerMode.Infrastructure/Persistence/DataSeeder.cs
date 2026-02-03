@@ -17,26 +17,26 @@ namespace FootballCareerMode.Infrastructure.Persistence
             if (await db.Careers.AnyAsync())
                 return;
 
-            var careerId = Guid.NewGuid();
-            var seasonId = Guid.NewGuid();
+            //var careerId = Guid.NewGuid();
+            //var seasonId = Guid.NewGuid();
 
-            var career = new Career(
-                careerId,
-                "My Career",
-                "Real Madrid",
-                DateTime.UtcNow
-            );
+            //var career = new Career(
+            //    careerId,
+            //    "My Career",
+            //    "Real Madrid",
+            //    DateTime.UtcNow
+            //);
 
-            var season = new Season(
-                seasonId,
-                careerId,
-                "2024–25",
-                DateTime.UtcNow,
-                DateTime.UtcNow
-            );
+            //var season = new Season(
+            //    seasonId,
+            //    careerId,
+            //    "2024–25",
+            //    DateTime.UtcNow,
+            //    DateTime.UtcNow
+            //);
 
-            db.Careers.Add(career);
-            db.Seasons.Add(season);
+            //db.Careers.Add(career);
+            //db.Seasons.Add(season);
 
             await db.SaveChangesAsync();
         }
