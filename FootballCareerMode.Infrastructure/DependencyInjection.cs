@@ -22,6 +22,7 @@ namespace FootballCareerMode.Infrastructure
 
             services.AddScoped<ISeasonRepository, SeasonRepository>();
             services.AddScoped<ICareerRepository, CareerRepository>();
+            services.AddScoped<INarrativeSnapshotRepository, NarrativeSnapshotRepository>();
 
             return services;
         }

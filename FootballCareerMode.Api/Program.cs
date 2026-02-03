@@ -26,6 +26,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<SubmitMatchService>();
 //   Create Career
 builder.Services.AddScoped<CreateCareerService>();
+//   Create Season
+builder.Services.AddScoped<CreateSeasonService>();
 
 //   Match Narrative
 builder.Services.AddScoped<MatchNarrativeInputBuilder>();
@@ -45,9 +47,6 @@ builder.Services.AddScoped<SeasonNarrativeService>();
 builder.Services.AddInfrastructure(
     builder.Configuration.GetConnectionString("DefaultConnection")!
 );
-
-//   Snapshot Repository
-builder.Services.AddScoped<INarrativeSnapshotRepository, NarrativeSnapshotRepository>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -74,7 +73,6 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<FootballCareerModeDbContext>();
-    await DataSeeder.SeedAsync(db);
 }
 
 app.Run();

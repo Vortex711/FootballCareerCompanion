@@ -18,7 +18,7 @@ namespace FootballCareerMode.Infrastructure.Repositories
             _db = db;
         }
 
-        public async Task AddCareerAsync(Career career)
+        public async Task CreateCareerAsync(Career career)
         {
             _db.Careers.Add(career);
             await _db.SaveChangesAsync();

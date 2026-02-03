@@ -1,5 +1,7 @@
 ﻿using FootballCareerMode.Application.DTOs.Careers;
+using FootballCareerMode.Application.DTOs.Seasons;
 using FootballCareerMode.Application.UseCases.Careers;
+using FootballCareerMode.Application.UseCases.Seasons;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +12,12 @@ namespace FootballCareerMode.Api.Controllers
     public class CareersController : ControllerBase
     {
         private readonly CreateCareerService _createCareerService;
+        private readonly CreateSeasonService _createSeasonService;
 
-        public CareersController(CreateCareerService createCareerService)
+        public CareersController(CreateCareerService createCareerService, CreateSeasonService createSeasonService)
         {
             _createCareerService = createCareerService;
+            _createSeasonService = createSeasonService;
         }
 
         [HttpPost]
@@ -28,6 +32,23 @@ namespace FootballCareerMode.Api.Controllers
                 nameof(CreateCareer),
                 new { careerId },
                 new { careerId });
+        }
+
+        [HttpPost("{careerId:guid}/seasons")]
+        public async Task<IActionResult> CreateSeason(
+            Guid careerId,
+            [FromBody] CreateSeasonRequest request)
+        {
+            var seasonId = await _createSeasonService.CreateSeason(
+                careerId,
+                request.Name,
+                request.StartDate,
+                request.Expectation);
+
+            return CreatedAtAction(
+                nameof(CreateSeason),
+                new { seasonId },
+                new { seasonId });
         }
     }
 }

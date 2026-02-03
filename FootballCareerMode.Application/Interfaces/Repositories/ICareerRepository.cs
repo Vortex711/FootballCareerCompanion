@@ -1,4 +1,5 @@
 ﻿using FootballCareerMode.Domain.Careers;
+using FootballCareerMode.Domain.Seasons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace FootballCareerMode.Application.Interfaces.Repositories
 {
     public interface ICareerRepository
     {
-        Task AddCareerAsync(Career career);
+        Task CreateCareerAsync(Career career);
 
         Task<Career?> GetCareerById(Guid careerId);
     }

@@ -30,7 +30,7 @@ namespace FootballCareerMode.Application.UseCases.Careers
                 managerName: managerName,
                 createdAt: DateTime.UtcNow);
 
-            await _careerRepository.AddCareerAsync(career);
+            await _careerRepository.CreateCareerAsync(career);
             return career.Id;
         }
     }

@@ -20,6 +20,12 @@ namespace FootballCareerMode.Infrastructure.Repositories
             _db = db;
         }
 
+        public async Task CreateSeasonAsync(Season season)
+        {
+            _db.Seasons.Add(season);
+            await _db.SaveChangesAsync();
+        }
+
         public async Task<Season?> GetByIdAsync(Guid seasonId)
         {
             return await _db.Seasons
