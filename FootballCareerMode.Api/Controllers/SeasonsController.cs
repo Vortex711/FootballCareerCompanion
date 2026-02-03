@@ -9,10 +9,26 @@ namespace FootballCareerMode.Api.Controllers
     public class SeasonsController : ControllerBase
     {
         private readonly SeasonNarrativeService _SeasonNarrativeService;
+        private readonly EndSeasonService _endSeasonService;
 
-        public SeasonsController(SeasonNarrativeService SeasonNarrativeService)
+        public SeasonsController(
+            SeasonNarrativeService SeasonNarrativeService, 
+            EndSeasonService endSeasonService)
         {
             _SeasonNarrativeService = SeasonNarrativeService;
+            _endSeasonService = endSeasonService;
+        }
+
+        [HttpPost("{seasonId:guid}/end")]
+        public async Task<IActionResult> EndSeason(
+            Guid seasonId,
+            [FromBody] DateTime endDate)
+        {
+            await _endSeasonService.EndSeasonAsync(
+                seasonId,
+                endDate);
+
+            return NoContent();
         }
 
         [HttpPost("{seasonId:guid}/narrative")]

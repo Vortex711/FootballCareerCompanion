@@ -11,6 +11,8 @@ namespace FootballCareerMode.Application.Interfaces.Repositories
     public interface ISeasonRepository
     {
         Task CreateSeasonAsync(Season season);
+
+        Task UpdateAsync();
         Task<Season?> GetByIdAsync(Guid seasonId);
         Task AddMatchAsync(Match matches);
         Task<bool> MatchExistsAsync(

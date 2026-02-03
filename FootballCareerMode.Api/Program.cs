@@ -28,6 +28,8 @@ builder.Services.AddScoped<SubmitMatchService>();
 builder.Services.AddScoped<CreateCareerService>();
 //   Create Season
 builder.Services.AddScoped<CreateSeasonService>();
+//   End Season
+builder.Services.AddScoped<EndSeasonService>();
 
 //   Match Narrative
 builder.Services.AddScoped<MatchNarrativeInputBuilder>();

@@ -26,9 +26,7 @@ namespace FootballCareerMode.Application.UseCases.Seasons
             DateTime? startDate,
             BoardExpectation expectation)
         {
-            var career = await _careerRepository.GetCareerById(careerId);
-
-            if (career == null)
+            var career = await _careerRepository.GetCareerById(careerId) ??
                 throw new InvalidOperationException("Career not found.");
 
             var season = new Season(
