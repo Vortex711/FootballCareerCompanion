@@ -9,10 +9,10 @@ namespace FootballCareerCompanion.Api.Controllers
     [ApiController]
     public class MatchesController : ControllerBase
     {
-        private readonly SubmitMatchService _submitMatchService;
-        private readonly GetMatchNarrativeService _getMatchNarrativeService;
+        private readonly SubmitMatchUseCase _submitMatchService;
+        private readonly GetMatchNarrativeUseCase _getMatchNarrativeService;
 
-        public MatchesController(SubmitMatchService submitMatchService, GetMatchNarrativeService getMatchNarrativeService)
+        public MatchesController(SubmitMatchUseCase submitMatchService, GetMatchNarrativeUseCase getMatchNarrativeService)
         {
             _submitMatchService = submitMatchService;
             _getMatchNarrativeService = getMatchNarrativeService;

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace FootballCareerCompanion.Application.UseCases.Seasons
 {
-    public class CreateSeasonService
+    public class CreateSeasonUseCase
     {
         private readonly ISeasonRepository _seasonRepository;
         private readonly ICareerRepository _careerRepository;
 
-        public CreateSeasonService(ISeasonRepository seasonRepository, ICareerRepository careerRepository)
+        public CreateSeasonUseCase(ISeasonRepository seasonRepository, ICareerRepository careerRepository)
         {
             _seasonRepository = seasonRepository;
             _careerRepository = careerRepository;

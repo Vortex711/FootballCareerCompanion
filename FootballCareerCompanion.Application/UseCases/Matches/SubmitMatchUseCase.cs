@@ -1,6 +1,6 @@
-﻿using FootballCareerCompanion.Application.AI;
-using FootballCareerCompanion.Application.DTOs.Matches;
+﻿using FootballCareerCompanion.Application.DTOs.Matches;
 using FootballCareerCompanion.Application.Interfaces.Repositories;
+using FootballCareerCompanion.Application.Narrative;
 using FootballCareerCompanion.Domain.Matches;
 using FootballCareerCompanion.Domain.MatchEvents;
 using System;
@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace FootballCareerCompanion.Application.UseCases.Matches
 {
-    public class SubmitMatchService
+    public class SubmitMatchUseCase
     {
         private readonly ISeasonRepository _seasonRepository;
         private readonly MatchNarrativeOrchestrator _narrativeOrchestrator;
 
-        public SubmitMatchService(ISeasonRepository seasonRepository, MatchNarrativeOrchestrator narrativeOrchestrator)
+        public SubmitMatchUseCase(ISeasonRepository seasonRepository, MatchNarrativeOrchestrator narrativeOrchestrator)
         {
             _seasonRepository = seasonRepository;
             _narrativeOrchestrator = narrativeOrchestrator;

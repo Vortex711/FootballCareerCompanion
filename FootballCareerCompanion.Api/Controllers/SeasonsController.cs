@@ -8,12 +8,12 @@ namespace FootballCareerCompanion.Api.Controllers
     [ApiController]
     public class SeasonsController : ControllerBase
     {
-        private readonly SeasonNarrativeService _SeasonNarrativeService;
-        private readonly EndSeasonService _endSeasonService;
+        private readonly SeasonNarrativeUseCase _SeasonNarrativeService;
+        private readonly EndSeasonUseCase _endSeasonService;
 
         public SeasonsController(
-            SeasonNarrativeService SeasonNarrativeService, 
-            EndSeasonService endSeasonService)
+            SeasonNarrativeUseCase SeasonNarrativeService, 
+            EndSeasonUseCase endSeasonService)
         {
             _SeasonNarrativeService = SeasonNarrativeService;
             _endSeasonService = endSeasonService;

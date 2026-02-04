@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace FootballCareerCompanion.Application.UseCases.Careers
 {
-    public class CreateCareerService
+    public class CreateCareerUseCase
     {
         private readonly ICareerRepository _careerRepository;
 
-        public CreateCareerService(ICareerRepository careerRepository)
+        public CreateCareerUseCase(ICareerRepository careerRepository)
         {
             _careerRepository = careerRepository;
         }

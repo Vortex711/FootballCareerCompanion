@@ -11,10 +11,10 @@ namespace FootballCareerCompanion.Api.Controllers
     [ApiController]
     public class CareersController : ControllerBase
     {
-        private readonly CreateCareerService _createCareerService;
-        private readonly CreateSeasonService _createSeasonService;
+        private readonly CreateCareerUseCase _createCareerService;
+        private readonly CreateSeasonUseCase _createSeasonService;
 
-        public CareersController(CreateCareerService createCareerService, CreateSeasonService createSeasonService)
+        public CareersController(CreateCareerUseCase createCareerService, CreateSeasonUseCase createSeasonService)
         {
             _createCareerService = createCareerService;
             _createSeasonService = createSeasonService;

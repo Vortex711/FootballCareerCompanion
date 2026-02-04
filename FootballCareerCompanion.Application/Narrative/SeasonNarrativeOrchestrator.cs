@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FootballCareerCompanion.Application.AI
+namespace FootballCareerCompanion.Application.Narrative
 {
     public class SeasonNarrativeOrchestrator
     {

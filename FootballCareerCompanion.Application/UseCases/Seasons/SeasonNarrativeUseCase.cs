@@ -1,5 +1,5 @@
-﻿using FootballCareerCompanion.Application.AI;
-using FootballCareerCompanion.Application.Interfaces.Repositories;
+﻿using FootballCareerCompanion.Application.Interfaces.Repositories;
+using FootballCareerCompanion.Application.Narrative;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace FootballCareerCompanion.Application.UseCases.Seasons
 {
-    public class SeasonNarrativeService
+    public class SeasonNarrativeUseCase
     {
         private readonly INarrativeSnapshotRepository _repository;
         private readonly SeasonNarrativeOrchestrator _orchestrator;
 
-        public SeasonNarrativeService(
+        public SeasonNarrativeUseCase(
             INarrativeSnapshotRepository repository,
             SeasonNarrativeOrchestrator orchestrator)
         {

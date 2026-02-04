@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace FootballCareerCompanion.Application.UseCases.Seasons
 {
-    public class EndSeasonService
+    public class EndSeasonUseCase
     {
         private readonly ISeasonRepository _seasonRepository;
 
-        public EndSeasonService(ISeasonRepository seasonRepository)
+        public EndSeasonUseCase(ISeasonRepository seasonRepository)
         {
             _seasonRepository = seasonRepository;
         }

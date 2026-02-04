@@ -1,8 +1,8 @@
-using FootballCareerCompanion.Application.AI;
 using FootballCareerCompanion.Application.AI.Builders;
 using FootballCareerCompanion.Application.AI.Generators;
 using FootballCareerCompanion.Application.AI.PromptBuilders;
 using FootballCareerCompanion.Application.Interfaces.Repositories;
+using FootballCareerCompanion.Application.Narrative;
 using FootballCareerCompanion.Application.UseCases.Careers;
 using FootballCareerCompanion.Application.UseCases.Matches;
 using FootballCareerCompanion.Application.UseCases.Seasons;
@@ -23,27 +23,27 @@ builder.Services.AddSwaggerGen();
 
 // Application services
 //   Submit Match
-builder.Services.AddScoped<SubmitMatchService>();
+builder.Services.AddScoped<SubmitMatchUseCase>();
 //   Create Career
-builder.Services.AddScoped<CreateCareerService>();
+builder.Services.AddScoped<CreateCareerUseCase>();
 //   Create Season
-builder.Services.AddScoped<CreateSeasonService>();
+builder.Services.AddScoped<CreateSeasonUseCase>();
 //   End Season
-builder.Services.AddScoped<EndSeasonService>();
+builder.Services.AddScoped<EndSeasonUseCase>();
 
 //   Match Narrative
 builder.Services.AddScoped<MatchNarrativeInputBuilder>();
 builder.Services.AddScoped<MatchReportPromptBuilder>();
 builder.Services.AddScoped<IMatchNarrativeGenerator, FakeMatchNarrativeGenerator>();
 builder.Services.AddScoped<MatchNarrativeOrchestrator>();
-builder.Services.AddScoped<GetMatchNarrativeService>();
+builder.Services.AddScoped<GetMatchNarrativeUseCase>();
 
 //   SeasonNarrative
 builder.Services.AddScoped<SeasonNarrativeInputBuilder>();
 builder.Services.AddScoped<SeasonReportPromptBuilder>();
 builder.Services.AddScoped<ISeasonNarrativeGenerator, FakeSeasonNarrativeGenerator>();
 builder.Services.AddScoped<SeasonNarrativeOrchestrator>();
-builder.Services.AddScoped<SeasonNarrativeService>();
+builder.Services.AddScoped<SeasonNarrativeUseCase>();
 
 //   Infrastructure
 builder.Services.AddInfrastructure(

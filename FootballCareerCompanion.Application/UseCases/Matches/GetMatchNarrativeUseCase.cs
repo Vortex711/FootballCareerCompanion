@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace FootballCareerCompanion.Application.UseCases.Matches
 {
-    public class GetMatchNarrativeService
+    public class GetMatchNarrativeUseCase
     {
         private readonly INarrativeSnapshotRepository _repository;
 
-        public GetMatchNarrativeService(INarrativeSnapshotRepository repository)
+        public GetMatchNarrativeUseCase(INarrativeSnapshotRepository repository)
         {
             _repository = repository;
         }
