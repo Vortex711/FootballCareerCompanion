@@ -22,22 +22,31 @@ namespace FootballCareerCompanion.Application.UseCases.Matches
             _narrativeOrchestrator = narrativeOrchestrator;
         }
 
-        public async Task<Guid> SubmitAsync(SubmitMatchRequest request)
+        public async Task<Guid> SubmitAsync(
+            Guid seasonId,
+            string competitionName,
+            string opponentName,
+            bool isHome,
+            int teamGoals,
+            int opponentGoals,
+            int? newLeaguePosition,
+            DateTime playedAt,
+            List<GoalEventRequest>? goalEvents)
         {
             var normalizedPlayedAt = DateTime.SpecifyKind(
-                request.PlayedAt,
+                playedAt,
                 DateTimeKind.Utc
             );
             //1.Load Season
-            var season = await _seasonRepository.GetByIdAsync(request.SeasonId);
+            var season = await _seasonRepository.GetByIdAsync(seasonId);
             if (season == null)
                 throw new InvalidOperationException("Season not found.");
 
             //2.Duplication check (Idempotency)
             var exists = await _seasonRepository.MatchExistsAsync(
-                request.SeasonId,
-                request.CompetitionName,
-                request.OpponentName,
+                seasonId,
+                competitionName,
+                opponentName,
                 normalizedPlayedAt);
 
             if (exists)
@@ -46,19 +55,19 @@ namespace FootballCareerCompanion.Application.UseCases.Matches
             //3.Create Match
             var match = new Match(
                 id: Guid.NewGuid(),
-                seasonId: request.SeasonId,
-                competitionName: request.CompetitionName,
-                opponentName: request.OpponentName,
-                isHome: request.IsHome,
-                teamGoals: request.TeamGoals,
-                opponentGoals: request.OpponentGoals,
+                seasonId: seasonId,
+                competitionName: competitionName,
+                opponentName: opponentName,
+                isHome: isHome,
+                teamGoals: teamGoals,
+                opponentGoals: opponentGoals,
                 playedAt: normalizedPlayedAt,
                 createdAt: DateTime.UtcNow);
 
             //4.Add Goal Events (optional)
-            if (request.GoalEvents != null)
+            if (goalEvents != null)
             {
-                foreach(var goal in request.GoalEvents)
+                foreach(var goal in goalEvents)
                 {
                     var matchEvent = new MatchEvent(
                         id: Guid.NewGuid(),
@@ -70,8 +79,13 @@ namespace FootballCareerCompanion.Application.UseCases.Matches
                 }
             }
 
-            //5.Attach match to season
+            //5.Add season start date if current match is the first
+            if (season.Matches.Count == 0)
+                season.StartSeason(playedAt);
+
+            //6.Attach match and update league position in season
             season.AddMatch(match);
+            season.UpdateLeaguePosition(newLeaguePosition);
 
             await _seasonRepository.AddMatchAsync(match);
 

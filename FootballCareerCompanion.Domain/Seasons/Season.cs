@@ -49,6 +49,14 @@ namespace FootballCareerCompanion.Domain.Seasons
             Expectation = expectation;
         }
 
+        public void StartSeason(DateTime startDate)
+        {
+            if (StartDate != null)
+                throw new InvalidOperationException("Season is already started.");
+
+            StartDate = startDate;
+        }
+
         public void EndSeason(DateTime endDate)
         {
             if (EndDate != null)
@@ -69,8 +77,11 @@ namespace FootballCareerCompanion.Domain.Seasons
 
             _matches.Add(match);
         }
-        public void UpdateLeaguePosition(int position)
+        public void UpdateLeaguePosition(int? position)
         {
+            if (position == null)
+                return;
+            
             if (position <= 0)
                 throw new ArgumentOutOfRangeException(nameof(position), "League position must be positive.");
 

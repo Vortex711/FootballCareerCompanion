@@ -26,7 +26,16 @@ namespace FootballCareerCompanion.Api.Controllers
             if (seasonId != request.SeasonId)
                 return BadRequest("Season ID mismatch.");
 
-            var matchId = await _submitMatchService.SubmitAsync(request);
+            var matchId = await _submitMatchService.SubmitAsync(
+                request.SeasonId,
+                request.CompetitionName,
+                request.OpponentName,
+                request.IsHome,
+                request.TeamGoals,
+                request.OpponentGoals,
+                request.NewLeaguePosition,
+                request.PlayedAt,
+                request.GoalEvents);
 
             return CreatedAtAction(
                 nameof(SubmitMatch),

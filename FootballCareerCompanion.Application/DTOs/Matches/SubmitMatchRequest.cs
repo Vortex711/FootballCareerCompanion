@@ -14,6 +14,7 @@ namespace FootballCareerCompanion.Application.DTOs.Matches
         public bool IsHome { get; init; }
         public int TeamGoals { get; init; }
         public int OpponentGoals { get; init; }
+        public int? NewLeaguePosition { get; init; }
         public DateTime PlayedAt { get; init; } 
 
         public List<GoalEventRequest>? GoalEvents { get; init; }
