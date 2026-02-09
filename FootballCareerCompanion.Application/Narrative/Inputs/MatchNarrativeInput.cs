@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FootballCareerCompanion.Domain.Seasons;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace FootballCareerCompanion.Application.AI.Inputs
     public class MatchNarrativeInput
     {
         public string CompetitionName { get; init; } = null!;
+        public string TeamManagerName { get; init; } = null!;
         public string TeamName { get; init; } = null!;
         public string OpponentName { get; init; } = null!;
         public bool IsHome { get; init; }
@@ -16,7 +18,10 @@ namespace FootballCareerCompanion.Application.AI.Inputs
         public int TeamGoals { get; init; }
         public int OpponentGoals { get; init; }
 
-        public string Result { get; init; } = null!;
+        public int? LeaguePositionAfter { get; init; }
+        public int? LeaguePositionBefore { get; init; }
+
+        public BoardExpectation Expectation { get; init; } 
 
         public DateTime PlayedAt { get; init; }
 

@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FootballCareerMode.Infrastructure.Migrations
+namespace FootballCareerCompanion.Infrastructure.Migrations
 {
     [DbContext(typeof(FootballCareerCompanionDbContext))]
-    [Migration("20260201064235_FixMatchSeasonMapping")]
-    partial class FixMatchSeasonMapping
+    [Migration("20260207054756_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace FootballCareerMode.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FootballCareerMode.Domain.Careers.Career", b =>
+            modelBuilder.Entity("FootballCareerCompanion.Domain.Careers.Career", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,6 +39,10 @@ namespace FootballCareerMode.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ManagerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -49,7 +53,7 @@ namespace FootballCareerMode.Infrastructure.Migrations
                     b.ToTable("Careers");
                 });
 
-            modelBuilder.Entity("FootballCareerMode.Domain.MatchEvents.MatchEvent", b =>
+            modelBuilder.Entity("FootballCareerCompanion.Domain.MatchEvents.MatchEvent", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +77,7 @@ namespace FootballCareerMode.Infrastructure.Migrations
                     b.ToTable("MatchEvents");
                 });
 
-            modelBuilder.Entity("FootballCareerMode.Domain.Matches.Match", b =>
+            modelBuilder.Entity("FootballCareerCompanion.Domain.Matches.Match", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,6 +93,12 @@ namespace FootballCareerMode.Infrastructure.Migrations
 
                     b.Property<bool>("IsHome")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("LeaguePositionAfter")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LeaguePositionBefore")
+                        .HasColumnType("int");
 
                     b.Property<int>("OpponentGoals")
                         .HasColumnType("int");
@@ -115,7 +125,7 @@ namespace FootballCareerMode.Infrastructure.Migrations
                     b.ToTable("Matches");
                 });
 
-            modelBuilder.Entity("FootballCareerMode.Domain.Narratives.NarrativeSnapshot", b =>
+            modelBuilder.Entity("FootballCareerCompanion.Domain.Narratives.NarrativeSnapshot", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -158,7 +168,7 @@ namespace FootballCareerMode.Infrastructure.Migrations
                     b.ToTable("NarrativeSnapshots");
                 });
 
-            modelBuilder.Entity("FootballCareerMode.Domain.Seasons.Season", b =>
+            modelBuilder.Entity("FootballCareerCompanion.Domain.Seasons.Season", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -172,6 +182,12 @@ namespace FootballCareerMode.Infrastructure.Migrations
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Expectation")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LeaguePosition")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -187,18 +203,18 @@ namespace FootballCareerMode.Infrastructure.Migrations
                     b.ToTable("Seasons");
                 });
 
-            modelBuilder.Entity("FootballCareerMode.Domain.MatchEvents.MatchEvent", b =>
+            modelBuilder.Entity("FootballCareerCompanion.Domain.MatchEvents.MatchEvent", b =>
                 {
-                    b.HasOne("FootballCareerMode.Domain.Matches.Match", null)
+                    b.HasOne("FootballCareerCompanion.Domain.Matches.Match", null)
                         .WithMany("Events")
                         .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FootballCareerMode.Domain.Matches.Match", b =>
+            modelBuilder.Entity("FootballCareerCompanion.Domain.Matches.Match", b =>
                 {
-                    b.HasOne("FootballCareerMode.Domain.Seasons.Season", "Season")
+                    b.HasOne("FootballCareerCompanion.Domain.Seasons.Season", "Season")
                         .WithMany("Matches")
                         .HasForeignKey("SeasonId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -207,9 +223,9 @@ namespace FootballCareerMode.Infrastructure.Migrations
                     b.Navigation("Season");
                 });
 
-            modelBuilder.Entity("FootballCareerMode.Domain.Seasons.Season", b =>
+            modelBuilder.Entity("FootballCareerCompanion.Domain.Seasons.Season", b =>
                 {
-                    b.HasOne("FootballCareerMode.Domain.Careers.Career", "Career")
+                    b.HasOne("FootballCareerCompanion.Domain.Careers.Career", "Career")
                         .WithMany("Seasons")
                         .HasForeignKey("CareerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -218,17 +234,17 @@ namespace FootballCareerMode.Infrastructure.Migrations
                     b.Navigation("Career");
                 });
 
-            modelBuilder.Entity("FootballCareerMode.Domain.Careers.Career", b =>
+            modelBuilder.Entity("FootballCareerCompanion.Domain.Careers.Career", b =>
                 {
                     b.Navigation("Seasons");
                 });
 
-            modelBuilder.Entity("FootballCareerMode.Domain.Matches.Match", b =>
+            modelBuilder.Entity("FootballCareerCompanion.Domain.Matches.Match", b =>
                 {
                     b.Navigation("Events");
                 });
 
-            modelBuilder.Entity("FootballCareerMode.Domain.Seasons.Season", b =>
+            modelBuilder.Entity("FootballCareerCompanion.Domain.Seasons.Season", b =>
                 {
                     b.Navigation("Matches");
                 });

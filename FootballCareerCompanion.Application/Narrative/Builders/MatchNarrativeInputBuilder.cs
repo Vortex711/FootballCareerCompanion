@@ -57,6 +57,7 @@ namespace FootballCareerCompanion.Application.AI.Builders
             return new MatchNarrativeInput
             {
                 CompetitionName = match.CompetitionName,
+                TeamManagerName = match.Season.Career.ManagerName,
                 TeamName = match.Season.Career.ClubName,
                 OpponentName = match.OpponentName,
                 IsHome = match.IsHome,
@@ -64,10 +65,10 @@ namespace FootballCareerCompanion.Application.AI.Builders
                 TeamGoals = match.TeamGoals,
                 OpponentGoals = match.OpponentGoals,
 
-                Result =
-                    match.TeamGoals > match.OpponentGoals ? "Win" :
-                    match.TeamGoals < match.OpponentGoals ? "Loss" :
-                    "Draw",
+                LeaguePositionAfter = match.LeaguePositionAfter,
+                LeaguePositionBefore = match.LeaguePositionBefore,
+
+                Expectation = match.Season.Expectation,
 
                 PlayedAt = match.PlayedAt,
 

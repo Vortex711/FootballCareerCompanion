@@ -18,6 +18,8 @@ namespace FootballCareerCompanion.Domain.Matches
         public bool IsHome { get; private set; }
         public int TeamGoals { get; private set; }
         public int OpponentGoals { get; private set; }
+        public int? LeaguePositionBefore { get; private set; }
+        public int? LeaguePositionAfter { get; private set; }
         public DateTime PlayedAt { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
@@ -33,6 +35,8 @@ namespace FootballCareerCompanion.Domain.Matches
             bool isHome,
             int teamGoals,
             int opponentGoals,
+            int? leaguePositionBefore,
+            int? leaguePositionAfter,
             DateTime playedAt,
             DateTime createdAt)
         {
@@ -58,6 +62,8 @@ namespace FootballCareerCompanion.Domain.Matches
             IsHome = isHome;
             TeamGoals = teamGoals;
             OpponentGoals = opponentGoals;
+            LeaguePositionBefore = leaguePositionBefore;
+            LeaguePositionAfter = leaguePositionAfter;
             PlayedAt = playedAt;
             CreatedAt = createdAt;
         }

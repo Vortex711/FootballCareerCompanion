@@ -33,7 +33,7 @@ namespace FootballCareerCompanion.Api.Controllers
                 request.IsHome,
                 request.TeamGoals,
                 request.OpponentGoals,
-                request.NewLeaguePosition,
+                request.LeaguePositionAfter,
                 request.PlayedAt,
                 request.GoalEvents);
 

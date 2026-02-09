@@ -29,7 +29,7 @@ namespace FootballCareerCompanion.Application.UseCases.Matches
             bool isHome,
             int teamGoals,
             int opponentGoals,
-            int? newLeaguePosition,
+            int? leaguePositionAfter,
             DateTime playedAt,
             List<GoalEventRequest>? goalEvents)
         {
@@ -52,6 +52,8 @@ namespace FootballCareerCompanion.Application.UseCases.Matches
             if (exists)
                 throw new InvalidOperationException("Duplicate match submission.");
 
+            int? leaguePositionBefore = season.LeaguePosition;
+
             //3.Create Match
             var match = new Match(
                 id: Guid.NewGuid(),
@@ -61,6 +63,8 @@ namespace FootballCareerCompanion.Application.UseCases.Matches
                 isHome: isHome,
                 teamGoals: teamGoals,
                 opponentGoals: opponentGoals,
+                leaguePositionBefore: leaguePositionBefore,
+                leaguePositionAfter: leaguePositionAfter,
                 playedAt: normalizedPlayedAt,
                 createdAt: DateTime.UtcNow);
 
@@ -80,12 +84,12 @@ namespace FootballCareerCompanion.Application.UseCases.Matches
             }
 
             //5.Add season start date if current match is the first
-            if (season.Matches.Count == 0)
+            if (season.Matches.Count == 0 && season.StartDate != null)
                 season.StartSeason(playedAt);
 
             //6.Attach match and update league position in season
             season.AddMatch(match);
-            season.UpdateLeaguePosition(newLeaguePosition);
+            season.UpdateLeaguePosition(leaguePositionAfter);
 
             await _seasonRepository.AddMatchAsync(match);
 

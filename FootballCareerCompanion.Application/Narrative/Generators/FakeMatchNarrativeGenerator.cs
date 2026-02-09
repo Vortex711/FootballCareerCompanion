@@ -13,7 +13,7 @@ namespace FootballCareerCompanion.Application.AI.Generators
         {
             var text = $"""
                  {input.CompetitionName}: {input.TeamGoals}-{input.OpponentGoals} vs {input.OpponentName} 
-                A {input.Result.ToLower()} with a goal difference of {input.TeamGoals - input.OpponentGoals}. 
+                Match had a goal difference of {input.TeamGoals - input.OpponentGoals}. 
                 Recent form coming into the match was {input.RecentForm}. 
                 """; 
             return Task.FromResult(text);
