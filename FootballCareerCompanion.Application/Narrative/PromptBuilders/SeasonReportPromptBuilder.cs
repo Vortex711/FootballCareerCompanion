@@ -32,6 +32,8 @@ namespace FootballCareerCompanion.Application.AI.PromptBuilders
             sb.AppendLine("Season Context:");
             sb.AppendLine($"- Club: {input.ClubName}");
             sb.AppendLine($"- Season: {input.SeasonName}");
+            sb.AppendLine($"- Manager: {input.ManagerName}");
+            sb.AppendLine($"- Board Expectation: {input.Expectation}");
 
             sb.AppendLine(input.InvocationType == SeasonInvocationType.EndOfSeason
                 ? "- This summary is written after the season has concluded."
@@ -45,6 +47,8 @@ namespace FootballCareerCompanion.Application.AI.PromptBuilders
             // ─────────────────────────────────────
 
             sb.AppendLine("Results Summary:");
+            if (input.LeaguePosition != null)
+                sb.AppendLine($"- League Position: {input.LeaguePosition}");
             sb.AppendLine($"- Wins: {input.Wins}");
             sb.AppendLine($"- Draws: {input.Draws}");
             sb.AppendLine($"- Losses: {input.Losses}");
@@ -97,7 +101,20 @@ namespace FootballCareerCompanion.Application.AI.PromptBuilders
             sb.AppendLine();
 
             // ─────────────────────────────────────
-            // 8. Writing instructions
+            // 8. Notable Matches
+            // ─────────────────────────────────────
+
+            if (input.NotableMatches.Any())
+            {
+                sb.AppendLine($"Notable Matches:");
+                foreach (var match in input.NotableMatches)
+                {
+                    sb.AppendLine($"{match.ContextLabel}: vs {match.OpponentName} ({match.TeamGoals} - {match.OpponentGoals})");
+                }
+            }
+
+            // ─────────────────────────────────────
+            // 9. Writing instructions
             // ─────────────────────────────────────
 
             sb.AppendLine("Writing Instructions:");

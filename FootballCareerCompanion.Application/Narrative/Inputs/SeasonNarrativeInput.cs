@@ -1,5 +1,6 @@
 ﻿using FootballCareerCompanion.Application.AI.Inputs.Enums;
 using FootballCareerCompanion.Application.AI.Inputs.Helpers;
+using FootballCareerCompanion.Domain.Seasons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,13 @@ namespace FootballCareerCompanion.Application.AI.Inputs
     {
         public string ClubName { get; init; } = null!;
         public string SeasonName { get; init; } = null!;
+        public string ManagerName { get; init; } = null!;
+        public BoardExpectation Expectation { get; init; }
 
         public SeasonInvocationType InvocationType { get; init; }
         public int MatchesPlayed { get; init; }
 
+        public int? LeaguePosition { get; init; }
         public int Wins { get; init; }
         public int Draws { get; init; }
         public int Losses { get; init; }
@@ -32,6 +36,8 @@ namespace FootballCareerCompanion.Application.AI.Inputs
 
         public VenueRecord Home { get; init; } = default!;
         public VenueRecord Away { get; init; } = default!;
+
+        public IReadOnlyList<NotableMatchSummary> NotableMatches { get; init; } = Array.Empty<NotableMatchSummary>();
 
         public NarrativeToneHint ToneHint { get; init; }
 

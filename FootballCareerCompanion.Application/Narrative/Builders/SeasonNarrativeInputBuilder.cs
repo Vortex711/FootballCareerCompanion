@@ -101,6 +101,40 @@ namespace FootballCareerCompanion.Application.AI.Builders
                     record.Losses++;
             }
 
+            var notableMatches = new List<NotableMatchSummary>();
+
+            var biggestWin = matches
+                .Where(m => m.TeamGoals > m.OpponentGoals)
+                .OrderByDescending(m => m.TeamGoals - m.OpponentGoals)
+                .FirstOrDefault();
+
+            if (biggestWin != null)
+            {
+                notableMatches.Add(new NotableMatchSummary
+                {
+                    OpponentName = biggestWin.OpponentName,
+                    TeamGoals = biggestWin.TeamGoals,
+                    OpponentGoals = biggestWin.OpponentGoals,
+                    ContextLabel = "Statement Win"
+                });
+            }
+
+            var biggestLoss = matches
+                .Where(m => m.OpponentGoals > m.TeamGoals)
+                .OrderByDescending(m => m.OpponentGoals - m.TeamGoals)
+                .FirstOrDefault();
+
+            if (biggestLoss != null)
+            {
+                notableMatches.Add(new NotableMatchSummary
+                {
+                    OpponentName = biggestLoss.OpponentName,
+                    TeamGoals = biggestLoss.TeamGoals,
+                    OpponentGoals = biggestLoss.OpponentGoals,
+                    ContextLabel = "Painful Defeat"
+                });
+            }
+
             NarrativeToneHint toneHint;
 
             if (wins > losses)
@@ -124,10 +158,13 @@ namespace FootballCareerCompanion.Application.AI.Builders
             {
                 ClubName = season.Career.ClubName,
                 SeasonName = season.Name,
+                ManagerName = season.Career.ManagerName,
+                Expectation = season.Expectation,
 
                 InvocationType = invocationType,
                 MatchesPlayed = matches.Count,
 
+                LeaguePosition = season.LeaguePosition,
                 Wins = wins,
                 Draws = draws,
                 Losses = losses,
@@ -147,6 +184,8 @@ namespace FootballCareerCompanion.Application.AI.Builders
 
                 Home = homeRecord,
                 Away = awayRecord,
+
+                NotableMatches = notableMatches,
 
                 ToneHint = toneHint
             };
