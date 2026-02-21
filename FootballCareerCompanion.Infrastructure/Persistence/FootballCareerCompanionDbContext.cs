@@ -8,6 +8,7 @@ using FootballCareerCompanion.Domain.Matches;
 using FootballCareerCompanion.Domain.MatchEvents;
 using FootballCareerCompanion.Domain.Narratives;
 using FootballCareerCompanion.Domain.Seasons;
+using FootballCareerCompanion.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace FootballCareerCompanion.Infrastructure.Persistence
@@ -17,6 +18,7 @@ namespace FootballCareerCompanion.Infrastructure.Persistence
         public FootballCareerCompanionDbContext(DbContextOptions<FootballCareerCompanionDbContext> options)
         : base(options) { }
 
+        public DbSet<User> Users => Set<User>();
         public DbSet<Career> Careers => Set<Career>();
         public DbSet<Season> Seasons => Set<Season>();
         public DbSet<Match> Matches => Set<Match>();

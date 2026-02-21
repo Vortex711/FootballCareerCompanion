@@ -2,11 +2,15 @@
 using FootballCareerCompanion.Application.DTOs.Seasons;
 using FootballCareerCompanion.Application.UseCases.Careers;
 using FootballCareerCompanion.Application.UseCases.Seasons;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace FootballCareerCompanion.Api.Controllers
 {
+    [Authorize]
     [Route("api/v1/careers")]
     [ApiController]
     public class CareersController : ControllerBase
@@ -23,7 +27,16 @@ namespace FootballCareerCompanion.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCareer([FromBody] CreateCareerRequest request)
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)
+                ?? User.FindFirst(JwtRegisteredClaimNames.Sub);
+
+            if (userIdClaim == null)
+                return Unauthorized();
+
+            var userId = Guid.Parse(userIdClaim.Value);
+
             var careerId = await _createCareerService.CreateCareerAsync(
+                userId,
                 request.Name,
                 request.ClubName,
                 request.ManagerName);

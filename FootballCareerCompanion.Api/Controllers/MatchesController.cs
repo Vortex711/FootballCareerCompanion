@@ -1,10 +1,12 @@
 ﻿using FootballCareerCompanion.Application.DTOs.Matches;
 using FootballCareerCompanion.Application.UseCases.Matches;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballCareerCompanion.Api.Controllers
 {
+    [Authorize]
     [Route("api/v1/seasons/{seasonId:guid}/matches")]
     [ApiController]
     public class MatchesController : ControllerBase

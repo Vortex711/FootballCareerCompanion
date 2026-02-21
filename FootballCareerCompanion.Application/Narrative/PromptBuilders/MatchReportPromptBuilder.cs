@@ -239,12 +239,16 @@ namespace FootballCareerCompanion.Application.AI.PromptBuilders
                 sb.AppendLine();
             }
 
-            sb.AppendLine("League position:");
-            sb.AppendLine($"- Before match: {input.LeaguePositionBefore}");
-            sb.AppendLine($"- After match: {input.LeaguePositionAfter}");
-            sb.AppendLine();
-
-            sb.AppendLine($"Board Expectation: {input.Expectation}");
+            if (input.LeaguePositionAfter != null)
+            {
+                sb.AppendLine("League position:");
+                sb.AppendLine($"- Before match: {input.LeaguePositionBefore}");
+                sb.AppendLine($"- After match: {input.LeaguePositionAfter}");
+                sb.AppendLine();
+                sb.AppendLine($"Board Expectation: {input.Expectation}");
+            }
+            
+            
             sb.AppendLine($"Team Manager: {input.TeamManagerName}");
             sb.AppendLine();
 

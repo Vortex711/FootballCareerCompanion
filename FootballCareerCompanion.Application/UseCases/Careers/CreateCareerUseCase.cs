@@ -19,12 +19,14 @@ namespace FootballCareerCompanion.Application.UseCases.Careers
         }
 
         public async Task<Guid> CreateCareerAsync(
+            Guid userId,
             string name,
             string clubName,
             string managerName)
         {
             var career = new Career(
                 id: Guid.NewGuid(),
+                userId: userId,
                 name: name,
                 clubName: clubName,
                 managerName: managerName,

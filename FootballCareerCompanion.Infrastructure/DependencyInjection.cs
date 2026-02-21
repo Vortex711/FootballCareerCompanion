@@ -20,6 +20,7 @@ namespace FootballCareerCompanion.Infrastructure
             services.AddDbContext<FootballCareerCompanionDbContext>(options =>
             options.UseSqlServer(connectionString));
 
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISeasonRepository, SeasonRepository>();
             services.AddScoped<ICareerRepository, CareerRepository>();
             services.AddScoped<INarrativeSnapshotRepository, NarrativeSnapshotRepository>();

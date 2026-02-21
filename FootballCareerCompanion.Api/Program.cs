@@ -2,6 +2,7 @@ using FootballCareerCompanion.Application.AI.Builders;
 using FootballCareerCompanion.Application.AI.Generators;
 using FootballCareerCompanion.Application.AI.PromptBuilders;
 using FootballCareerCompanion.Application.Interfaces.Repositories;
+using FootballCareerCompanion.Application.Interfaces.Security;
 using FootballCareerCompanion.Application.Narrative;
 using FootballCareerCompanion.Application.UseCases.Careers;
 using FootballCareerCompanion.Application.UseCases.Matches;
@@ -9,13 +10,37 @@ using FootballCareerCompanion.Application.UseCases.Seasons;
 using FootballCareerCompanion.Infrastructure;
 using FootballCareerCompanion.Infrastructure.Persistence;
 using FootballCareerCompanion.Infrastructure.Repositories;
+using FootballCareerCompanion.Infrastructure.Security;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!);
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 //Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -30,6 +55,10 @@ builder.Services.AddScoped<CreateCareerUseCase>();
 builder.Services.AddScoped<CreateSeasonUseCase>();
 //   End Season
 builder.Services.AddScoped<EndSeasonUseCase>();
+
+//Jwt Services
+builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 //   Match Narrative
 builder.Services.AddScoped<MatchNarrativeInputBuilder>();
@@ -68,6 +97,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -25,6 +25,12 @@ namespace FootballCareerCompanion.Infrastructure.Persistence.Configurations
 
             builder.Property(c => c.CreatedAt)
                    .IsRequired();
+
+            builder.HasOne(c => c.User)
+                .WithMany(u => u.Careers)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+                
         }
     }
 }

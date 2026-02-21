@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballCareerCompanion.Infrastructure.Migrations
 {
     [DbContext(typeof(FootballCareerCompanionDbContext))]
-    [Migration("20260207054756_InitialCreate")]
+    [Migration("20260221122546_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -201,6 +201,33 @@ namespace FootballCareerCompanion.Infrastructure.Migrations
                     b.HasIndex("CareerId");
 
                     b.ToTable("Seasons");
+                });
+
+            modelBuilder.Entity("FootballCareerCompanion.Domain.Users.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("FootballCareerCompanion.Domain.MatchEvents.MatchEvent", b =>

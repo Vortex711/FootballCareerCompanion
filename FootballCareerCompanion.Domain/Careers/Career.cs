@@ -1,4 +1,5 @@
 ﻿using FootballCareerCompanion.Domain.Seasons;
+using FootballCareerCompanion.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace FootballCareerCompanion.Domain.Careers
     public class Career
     {
         public Guid Id { get; private set; }
+        public Guid UserId { get; private set; }
+        public User User { get; private set; }
         public string Name { get; private set; } = null!;
         public string ClubName { get; private set; } = null!;
         public string ManagerName { get; private set; } = null!;
@@ -22,6 +25,7 @@ namespace FootballCareerCompanion.Domain.Careers
 
         public Career (
             Guid id, 
+            Guid userId,
             string name, 
             string clubName, 
             string managerName,
@@ -40,6 +44,7 @@ namespace FootballCareerCompanion.Domain.Careers
                 throw new ArgumentException("Manager name is required.");
 
             Id = id;
+            UserId = userId;
             Name = name;
             ClubName = clubName;
             CreatedAt = createdAt;

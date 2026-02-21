@@ -4,6 +4,7 @@ using FootballCareerCompanion.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballCareerCompanion.Infrastructure.Migrations
 {
     [DbContext(typeof(FootballCareerCompanionDbContext))]
-    partial class FootballCareerCompanionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260221125308_AddUserIdToCareer")]
+    partial class AddUserIdToCareer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -234,13 +237,11 @@ namespace FootballCareerCompanion.Infrastructure.Migrations
 
             modelBuilder.Entity("FootballCareerCompanion.Domain.Careers.Career", b =>
                 {
-                    b.HasOne("FootballCareerCompanion.Domain.Users.User", "User")
+                    b.HasOne("FootballCareerCompanion.Domain.Users.User", null)
                         .WithMany("Careers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FootballCareerCompanion.Domain.MatchEvents.MatchEvent", b =>
