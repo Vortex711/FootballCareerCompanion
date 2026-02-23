@@ -51,10 +51,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<SubmitMatchUseCase>();
 //   Create Career
 builder.Services.AddScoped<CreateCareerUseCase>();
+//   Get Careers
+builder.Services.AddScoped<GetCareersUseCase>();
 //   Create Season
 builder.Services.AddScoped<CreateSeasonUseCase>();
 //   End Season
 builder.Services.AddScoped<EndSeasonUseCase>();
+//   Get Seasons
+builder.Services.AddScoped<GetSeasonsUseCase>();
 
 //Jwt Services
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();

@@ -13,5 +13,7 @@ namespace FootballCareerCompanion.Application.Interfaces.Repositories
         Task CreateCareerAsync(Career career);
 
         Task<Career?> GetCareerById(Guid careerId);
+
+        Task<IReadOnlyList<Career>> GetCareersByUserId(Guid userId);
     }
 }

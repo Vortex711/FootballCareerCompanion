@@ -98,5 +98,10 @@ namespace FootballCareerCompanion.Infrastructure.Repositories
                 .Take(limit)
                 .ToListAsync();
         }
+
+        public async Task<IReadOnlyList<Season>> GetSeasonsByCareerId(Guid careerId)
+        {
+            return await _db.Seasons.Where(s => s.CareerId == careerId).ToListAsync();
+        }
     }
 }

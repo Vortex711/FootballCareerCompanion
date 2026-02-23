@@ -17,10 +17,15 @@ namespace FootballCareerCompanion.Api.Controllers
     {
         private readonly CreateCareerUseCase _createCareerService;
         private readonly CreateSeasonUseCase _createSeasonService;
+        private readonly GetCareersUseCase _getCareersUseCase;
 
-        public CareersController(CreateCareerUseCase createCareerService, CreateSeasonUseCase createSeasonService)
+        public CareersController(
+            CreateCareerUseCase createCareerService,
+            GetCareersUseCase getCareersUseCase,
+            CreateSeasonUseCase createSeasonService)
         {
             _createCareerService = createCareerService;
+            _getCareersUseCase = getCareersUseCase;
             _createSeasonService = createSeasonService;
         }
 
@@ -45,6 +50,29 @@ namespace FootballCareerCompanion.Api.Controllers
                 nameof(CreateCareer),
                 new { careerId },
                 new { careerId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCareersByUserId()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)
+                ?? User.FindFirst(JwtRegisteredClaimNames.Sub);
+
+            if (userIdClaim == null)
+                return Unauthorized();
+
+            var userId = Guid.Parse(userIdClaim.Value);
+
+            var careers = await _getCareersUseCase.GetCareersByUserId(userId);
+
+            return Ok(careers.Select(c => new CareerResponse
+            {
+                Id = c.Id,
+                Name = c.Name,
+                ClubName = c.ClubName,
+                ManagerName = c.ManagerName,
+                CreatedAt = c.CreatedAt
+            }));
         }
 
         [HttpPost("{careerId:guid}/seasons")]

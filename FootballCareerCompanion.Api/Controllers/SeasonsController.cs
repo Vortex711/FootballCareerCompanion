@@ -1,22 +1,44 @@
-﻿using FootballCareerCompanion.Application.UseCases.Seasons;
+﻿using FootballCareerCompanion.Application.DTOs.Seasons;
+using FootballCareerCompanion.Application.UseCases.Seasons;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballCareerCompanion.Api.Controllers
 {
+    [Authorize]
     [Route("api/v1/seasons")]
     [ApiController]
     public class SeasonsController : ControllerBase
     {
-        private readonly SeasonNarrativeUseCase _SeasonNarrativeService;
+        private readonly SeasonNarrativeUseCase _seasonNarrativeService;
+        private readonly GetSeasonsUseCase _getSeasonsUseCase;
         private readonly EndSeasonUseCase _endSeasonService;
 
         public SeasonsController(
-            SeasonNarrativeUseCase SeasonNarrativeService, 
+            SeasonNarrativeUseCase seasonNarrativeService,
+            GetSeasonsUseCase getSeasonsUseCase,
             EndSeasonUseCase endSeasonService)
         {
-            _SeasonNarrativeService = SeasonNarrativeService;
+            _seasonNarrativeService = seasonNarrativeService;
+            _getSeasonsUseCase = getSeasonsUseCase;
             _endSeasonService = endSeasonService;
+        }
+
+        [HttpGet("/api/v1/careers/{careerId:guid}/seasons")]
+        public async Task<IActionResult> GetSeasonsByCareerId(Guid careerId)
+        {
+            var seasons = await _getSeasonsUseCase.GetSeasonsByCareerId(careerId);
+
+            return Ok(seasons.Select(s => new SeasonResponse
+            {
+                Id = s.Id,
+                Name = s.Name,
+                BoardExpectation = s.Expectation.ToString(),
+                LeaguePosition = s.LeaguePosition,
+                StartDate = s.StartDate,
+                EndDate = s.EndDate
+            }));
         }
 
         [HttpPost("{seasonId:guid}/end")]
@@ -34,7 +56,7 @@ namespace FootballCareerCompanion.Api.Controllers
         [HttpPost("{seasonId:guid}/narrative")]
         public async Task<IActionResult> GenerateSeasonNarrative(Guid seasonId)
         {
-            await _SeasonNarrativeService.GenerateNarrativeAsync(seasonId);
+            await _seasonNarrativeService.GenerateNarrativeAsync(seasonId);
 
             return Accepted(new
             {
@@ -46,7 +68,7 @@ namespace FootballCareerCompanion.Api.Controllers
         [HttpGet("{seasonId:guid}/narrative")]
         public async Task<IActionResult> GetSeasonNarrative(Guid seasonId)
         {
-            var narrative = await _SeasonNarrativeService.GetNarrativeAsync(seasonId);
+            var narrative = await _seasonNarrativeService.GetNarrativeAsync(seasonId);
 
             if (narrative == null)
                 return NotFound("Season narrative not generated yet.");

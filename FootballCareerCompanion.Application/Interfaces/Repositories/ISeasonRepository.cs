@@ -33,5 +33,7 @@ namespace FootballCareerCompanion.Application.Interfaces.Repositories
             int limit
         );
 
+        Task<IReadOnlyList<Season>> GetSeasonsByCareerId(Guid careerId);
+
     }
 }

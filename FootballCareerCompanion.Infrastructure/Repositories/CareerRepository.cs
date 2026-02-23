@@ -29,5 +29,11 @@ namespace FootballCareerCompanion.Infrastructure.Repositories
             var career = await _db.Careers.FirstOrDefaultAsync(c => c.Id == careerId);
             return career;
         }
+
+        public async Task<IReadOnlyList<Career>> GetCareersByUserId(Guid userId)
+        {
+            var careers = await _db.Careers.Where(c => c.UserId == userId).ToListAsync();
+            return careers;
+        }
     }
 }
