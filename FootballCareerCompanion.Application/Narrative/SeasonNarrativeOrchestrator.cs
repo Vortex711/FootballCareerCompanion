@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FootballCareerCompanion.Application.Interfaces;
 
 namespace FootballCareerCompanion.Application.Narrative
 {
@@ -16,18 +17,18 @@ namespace FootballCareerCompanion.Application.Narrative
     {
         private readonly SeasonNarrativeInputBuilder _inputBuilder;
         private readonly SeasonReportPromptBuilder _promptBuilder;
-        private readonly ISeasonNarrativeGenerator _generator;
+        private readonly ILLMService _llmService;
         private readonly INarrativeSnapshotRepository _snapshotRepository;
 
         public SeasonNarrativeOrchestrator(
             SeasonNarrativeInputBuilder inputBuilder,
             SeasonReportPromptBuilder promptBuilder,
-            ISeasonNarrativeGenerator generator,
-            INarrativeSnapshotRepository snapshotRepository)
+            ILLMService llmService,
+        INarrativeSnapshotRepository snapshotRepository)
         {
             _inputBuilder = inputBuilder;
             _promptBuilder = promptBuilder;
-            _generator = generator;
+            _llmService = llmService;
             _snapshotRepository = snapshotRepository;
         }
 
@@ -43,13 +44,23 @@ namespace FootballCareerCompanion.Application.Narrative
 
             var prompt = _promptBuilder.Build(input);
 
-            var content = await _generator.GenerateAsync(prompt);
+            string content;
+
+            try
+            {
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(45));
+                content = await _llmService.GenerateAsync(prompt, cts.Token);
+            }
+            catch
+            {
+                content = "Narrative generation unavailable for this season.";
+            }
 
             var snapshot = NarrativeSnapshot.ForSeason(
                 seasonId,
                 content,
                 promptVersion: "v1",
-                modelVersion: "fake-ai");
+                modelVersion: "gemini-flash");
 
             await _snapshotRepository.AddAsync(snapshot);
         }

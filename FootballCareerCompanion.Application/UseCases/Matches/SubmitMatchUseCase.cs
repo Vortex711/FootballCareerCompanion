@@ -15,14 +15,19 @@ namespace FootballCareerCompanion.Application.UseCases.Matches
     {
         private readonly ISeasonRepository _seasonRepository;
         private readonly MatchNarrativeOrchestrator _narrativeOrchestrator;
+        private readonly INarrativeSnapshotRepository _snapshotRepository;
 
-        public SubmitMatchUseCase(ISeasonRepository seasonRepository, MatchNarrativeOrchestrator narrativeOrchestrator)
+        public SubmitMatchUseCase(
+            ISeasonRepository seasonRepository, 
+            MatchNarrativeOrchestrator narrativeOrchestrator,
+            INarrativeSnapshotRepository snapshotRepository)
         {
             _seasonRepository = seasonRepository;
             _narrativeOrchestrator = narrativeOrchestrator;
+            _snapshotRepository = snapshotRepository;
         }
 
-        public async Task<Guid> SubmitAsync(
+        public async Task<(Guid matchId, string narrative)> SubmitAsync(
             Guid seasonId,
             string competitionName,
             string opponentName,
@@ -95,10 +100,10 @@ namespace FootballCareerCompanion.Application.UseCases.Matches
 
             await _narrativeOrchestrator.GenerateForMatchAsync(match.Id);
 
-            await _narrativeOrchestrator.GenerateForMatchAsync(match.Id);
+            var snapshot = await _snapshotRepository.GetByMatchIdAsync(match.Id)
+                ?? throw new InvalidOperationException("Narrative snapshot was not generated.");
 
-
-            return match.Id;
+            return (match.Id, snapshot.Content);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace FootballCareerCompanion.Application.Narrative
         MatchNarrativeInputBuilder inputBuilder,
         MatchReportPromptBuilder promptBuilder,
         ILLMService llmService,
+        
         INarrativeSnapshotRepository snapshotRepository)
         {
             _inputBuilder = inputBuilder;
@@ -41,7 +42,8 @@ namespace FootballCareerCompanion.Application.Narrative
 
             try
             {
-                content = await _llmService.GenerateAsync(prompt);
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(45));
+                content = await _llmService.GenerateAsync(prompt, cts.Token);
             }
             catch
             {

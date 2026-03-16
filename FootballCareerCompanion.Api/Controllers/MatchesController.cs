@@ -28,7 +28,7 @@ namespace FootballCareerCompanion.Api.Controllers
             if (seasonId != request.SeasonId)
                 return BadRequest("Season ID mismatch.");
 
-            var matchId = await _submitMatchService.SubmitAsync(
+            var result = await _submitMatchService.SubmitAsync(
                 request.SeasonId,
                 request.CompetitionName,
                 request.OpponentName,
@@ -41,24 +41,24 @@ namespace FootballCareerCompanion.Api.Controllers
 
             return CreatedAtAction(
                 nameof(SubmitMatch),
-                new { matchId },
-                new { matchId });
+                new { result.matchId },
+                new { result.matchId, result.narrative });
         }
 
-        [HttpGet("{matchId}/narrative")]
-        public async Task<IActionResult> GetMatchNarrative(Guid matchId)
-        {
-            var narrative = await _getMatchNarrativeService.GetNarrativeAsync(matchId);
+        //[HttpGet("{matchId}/narrative")]
+        //public async Task<IActionResult> GetMatchNarrative(Guid matchId)
+        //{
+        //    var narrative = await _getMatchNarrativeService.GetNarrativeAsync(matchId);
 
-            if (narrative == null)
-                return NotFound("Match narrative not generated yet.");
+        //    if (narrative == null)
+        //        return NotFound("Match narrative not generated yet.");
 
-            return Ok(new
-            {
-                MatchId = matchId,
-                Narrative = narrative
-            });
-        }
+        //    return Ok(new
+        //    {
+        //        MatchId = matchId,
+        //        Narrative = narrative
+        //    });
+        //}
 
     }
 }

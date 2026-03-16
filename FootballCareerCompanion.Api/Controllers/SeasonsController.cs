@@ -3,6 +3,7 @@ using FootballCareerCompanion.Application.UseCases.Seasons;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 
 namespace FootballCareerCompanion.Api.Controllers
 {
@@ -56,28 +57,27 @@ namespace FootballCareerCompanion.Api.Controllers
         [HttpPost("{seasonId:guid}/narrative")]
         public async Task<IActionResult> GenerateSeasonNarrative(Guid seasonId)
         {
-            await _seasonNarrativeService.GenerateNarrativeAsync(seasonId);
+            var narrative = await _seasonNarrativeService.GenerateNarrativeAsync(seasonId);
 
             return Accepted(new
             {
-                SeasonId = seasonId,
-                Message = "Season narrative generation started."
+                narrative
             });
         }
 
-        [HttpGet("{seasonId:guid}/narrative")]
-        public async Task<IActionResult> GetSeasonNarrative(Guid seasonId)
-        {
-            var narrative = await _seasonNarrativeService.GetNarrativeAsync(seasonId);
+        //[HttpGet("{seasonId:guid}/narrative")]
+        //public async Task<IActionResult> GetSeasonNarrative(Guid seasonId)
+        //{
+        //    var narrative = await _seasonNarrativeService.GetNarrativeAsync(seasonId);
 
-            if (narrative == null)
-                return NotFound("Season narrative not generated yet.");
+        //    if (narrative == null)
+        //        return NotFound("Season narrative not generated yet.");
 
-            return Ok(new
-            {
-                SeasonId = seasonId,
-                Narrative = narrative
-            });
-        }
+        //    return Ok(new
+        //    {
+        //        SeasonId = seasonId,
+        //        Narrative = narrative
+        //    });
+        //}
     }
 }
