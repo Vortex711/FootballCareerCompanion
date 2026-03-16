@@ -15,6 +15,9 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.Extensions.Options;
+using FootballCareerCompanion.Infrastructure.AI.Gemini;
+using FootballCareerCompanion.Application.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -70,6 +73,9 @@ builder.Services.AddScoped<MatchReportPromptBuilder>();
 builder.Services.AddScoped<IMatchNarrativeGenerator, FakeMatchNarrativeGenerator>();
 builder.Services.AddScoped<MatchNarrativeOrchestrator>();
 builder.Services.AddScoped<GetMatchNarrativeUseCase>();
+builder.Services.Configure<GeminiOptions>(
+    builder.Configuration.GetSection(GeminiOptions.SectionName));
+builder.Services.AddHttpClient<ILLMService, GeminiLLMService>();
 
 //   SeasonNarrative
 builder.Services.AddScoped<SeasonNarrativeInputBuilder>();

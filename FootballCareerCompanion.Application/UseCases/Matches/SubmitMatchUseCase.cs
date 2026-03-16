@@ -84,7 +84,7 @@ namespace FootballCareerCompanion.Application.UseCases.Matches
             }
 
             //5.Add season start date if current match is the first
-            if (season.Matches.Count == 0 && season.StartDate != null)
+            if (season.Matches.Count == 0 && season.StartDate == null)
                 season.StartSeason(playedAt);
 
             //6.Attach match and update league position in season
@@ -93,19 +93,7 @@ namespace FootballCareerCompanion.Application.UseCases.Matches
 
             await _seasonRepository.AddMatchAsync(match);
 
-            //_ = Task.Run(async () =>
-            //{
-            //    try
-            //    {
-            //        Console.WriteLine("AI background task started");
-            //        await _narrativeOrchestrator.GenerateForMatchAsync(match.Id);
-            //        Console.WriteLine("AI generation completed");
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Console.WriteLine(ex.ToString());
-            //    }
-            //});
+            await _narrativeOrchestrator.GenerateForMatchAsync(match.Id);
 
             await _narrativeOrchestrator.GenerateForMatchAsync(match.Id);
 

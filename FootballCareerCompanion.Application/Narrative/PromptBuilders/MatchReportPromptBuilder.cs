@@ -255,7 +255,8 @@ namespace FootballCareerCompanion.Application.AI.PromptBuilders
             // OUTPUT REQUIREMENTS
             sb.AppendLine("Output requirements:");
             sb.AppendLine("- Write a single post-match narrative article.");
-            sb.AppendLine("- Medium length.");
+            //sb.AppendLine("- Medium length.");
+            sb.AppendLine("- Keep it between 120–180 words.");
             sb.AppendLine("- Neutral, authoritative tone.");
             sb.AppendLine("- Focus on interpretation and context, not listing data.");
 
