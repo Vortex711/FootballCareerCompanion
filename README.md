@@ -2,7 +2,7 @@
 
 A Clean Architecture ASP.NET Core Web API designed to enhance immersion in football career mode playthroughs through structured data modeling and AI-generated narratives.
 
-This backend allows users to manually log match results, track season progress, and generate dynamic match and season narratives based on accumulated data.
+This backend allows users to manually log match results, track season progress, and generate grounded football narratives based on accumulated data.
 
 The focus of this project is:
 
@@ -23,14 +23,14 @@ This system solves that by:
 * Structuring match and season data manually
 * Deriving narrative-relevant insights from stored data
 * Feeding structured inputs into AI prompt builders
-* Persisting generated narratives for future retrieval
+* Persisting generated narratives as immutable historical records
 
 The design prioritizes:
 
 * Structured input over raw prompts
 * Deterministic derivation logic
-* Clean, extensible architecture
-* Backend quality over UI polish
+* Backend clarity over feature count
+* Narrative consistency over regeneration
 
 ---
 
@@ -45,7 +45,7 @@ API
 
 ## Domain
 
-* Core entities: User, Career, Season, Match, MatchEvent
+* Core entities: User, Career, Season, Match, MatchEvent, NarrativeSnapshot
 * Encapsulated business logic
 * Private setters with controlled mutation methods
 * Aggregate boundaries respected
@@ -53,8 +53,9 @@ API
 ## Application
 
 * Use cases (SubmitMatch, CreateCareer, EndSeason, etc.)
-* AI input builders
-* Orchestrators
+* AI input builders (structured data derivation)
+* Prompt builders
+* Narrative orchestration
 * DTOs
 * Repository interfaces
 * Security abstractions (IJwtTokenGenerator, IPasswordHasher)
@@ -62,10 +63,10 @@ API
 ## Infrastructure
 
 * EF Core persistence (SQL Server)
-* Entity configurations
 * Repository implementations
 * JWT token generation
 * Password hashing (BCrypt)
+* LLM provider integration (Gemini)
 
 ## API
 
@@ -90,7 +91,7 @@ Career ownership is enforced via:
 
 Career → UserId (Foreign Key)
 
-All career and season queries are scoped to the authenticated user.
+All queries are scoped to the authenticated user.
 
 ---
 
@@ -108,98 +109,90 @@ All career and season queries are scoped to the authenticated user.
 ## 🏟 Career Management
 
 * Create career
-* Associate career with authenticated user
 * Retrieve user-scoped careers
-
-Career includes:
-
-* Name
-* ClubName
-* ManagerName
-* CreatedAt
-* UserId
 
 ---
 
 ## 📅 Season Management
 
 * Create season under career
-* End season
-* Update league position
+* End season (explicit trigger)
 * Retrieve seasons by career
-* Track board expectation (enum)
+* Track board expectation
 
 Season includes:
 
-* StartDate (derived on first match)
+* StartDate (derived)
 * EndDate
 * LeaguePosition
 * BoardExpectation
-* Derived metrics for narrative building
 
 ---
 
 ## ⚽ Match Submission
 
 * Manual match input
-* Idempotency check
-* Goal events with minute tracking
+* Goal event tracking
 * League position before/after tracking
-* Automatic season start date initialization
-* Optional league position update
-
-Match tracks:
-
-* Competition
-* Opponent
-* Venue
-* Goals
-* Goal events
-* League position delta
+* Automatic season initialization
+* Narrative generation trigger
 
 ---
 
 # 🤖 AI Narrative System
 
-AI is treated as a side effect, not core domain logic.
+AI is treated as a **side effect**, not core domain logic.
+
+Narratives are:
+
+> Generated once → stored → never regenerated
+
+This ensures consistency and historical integrity.
+
+---
 
 ## Match Narrative Pipeline
 
 1. Match submitted
-2. MatchNarrativeInputBuilder derives structured data
-3. PromptBuilder formats AI input
-4. IMatchNarrativeGenerator generates content (currently fake implementation)
+2. Structured input derived (MatchNarrativeInputBuilder)
+3. Prompt constructed (PromptBuilder)
+4. LLM called via abstraction (Gemini provider)
 5. NarrativeSnapshot persisted
 
 Includes:
 
 * Recent form
-* Recent head-to-head
-* Goal timeline
-* Result context
+* Head-to-head context
+* Goal timing
+* League position impact
 
 ---
 
 ## Season Narrative Pipeline
 
-User-triggered generation:
+Triggered explicitly when ending a season:
 
-1. SeasonNarrativeInputBuilder derives:
+1. Aggregated data derived across matches
+2. Prompt constructed with contextual constraints
+3. LLM generates season summary
+4. NarrativeSnapshot persisted
 
-   * Wins, draws, losses
-   * Goal distribution by phase
-   * Top scorers
-   * Venue records
-   * Notable matches
-   * Tone hints
-2. PromptBuilder constructs season prompt
-3. NarrativeSnapshot persisted
+Key characteristics:
 
-Season narrative supports:
+* Single summary per season
+* No regeneration
+* No mid-season summaries
+* Focus on narrative continuity
 
-* Mid-season invocation
-* End-of-season invocation
-* Deterministic tone guidance
+---
+
+# 🧠 AI Design Principles
+
+* AI never accesses EF entities directly
+* All inputs are structured DTOs
+* Prompts are deterministic and constraint-driven
+* Outputs are persisted snapshots
+* Provider-specific logic is isolated in Infrastructure
 
 ---
 
@@ -207,15 +200,14 @@ Season narrative supports:
 
 * SQL Server
 * EF Core (code-first)
-* Explicit migrations
-* Clean baseline reset during development
 
-Key relationships:
+Relationships:
 
 User 1 → N Career
 Career 1 → N Season
 Season 1 → N Match
 Match 1 → N MatchEvent
+Match/Season → NarrativeSnapshot
 
 ---
 
@@ -223,14 +215,12 @@ Match 1 → N MatchEvent
 
 This backend intentionally:
 
-* Avoids scraping or automatic stat ingestion
-* Prioritizes structured derived data
-* Avoids domain leakage into controllers
-* Uses DTOs for API responses
-* Returns empty collections instead of null
-* Treats enums as domain primitives
-* Converts enums to strings only at API boundary
-* Keeps AI isolated from core domain logic
+* Avoids scraping or automation
+* Uses manual input as a design choice
+* Prioritizes meaning over analytics
+* Keeps AI isolated from business logic
+* Avoids feature creep (no dashboards, no social features)
+* Treats narratives as memory, not dynamic output
 
 ---
 
@@ -241,7 +231,8 @@ This backend intentionally:
 * SQL Server
 * JWT Authentication
 * BCrypt password hashing
-* Clean Architecture layering
+* Google Gemini API (LLM integration)
+* Clean Architecture
 
 ---
 
@@ -251,13 +242,7 @@ This backend intentionally:
 
 ## 2️⃣ Configure JWT Secret
 
-Set environment variable:
-
-Windows:
-
 setx Jwt__Key "YOUR_SECRET_KEY"
-
-Restart terminal / IDE afterward.
 
 ---
 
@@ -273,54 +258,45 @@ Edit `appsettings.Development.json`:
 
 ---
 
-## 4️⃣ Apply Migrations
+## 4️⃣ Configure LLM Key
 
-```
+Add your Gemini API key:
+
+setx Gemini__ApiKey "YOUR_API_KEY"
+
+---
+
+## 5️⃣ Apply Migrations
+
 dotnet ef database update
-```
 
 ---
 
-## 5️⃣ Run API
+## 6️⃣ Run API
 
-```
 dotnet run
-```
 
 ---
 
-# 📌 Current Scope
+# 📌 Current Scope (MVP)
 
 Implemented:
 
 * JWT authentication
 * User-scoped careers
-* Season lifecycle
+* Season lifecycle (explicit end)
 * Match submission
-* AI narrative pipeline (match + season)
-* Structured DTO-based API responses
-* Clean repository pattern
+* AI narrative generation (match + season)
+* Snapshot-based persistence
+* Clean architecture layering
 
-Not implemented yet:
+Not implemented:
 
 * Frontend
-* Real AI provider integration
-* Refresh tokens
-* Role-based authorization
-* Competition entity abstraction
-* Advanced statistics engine
-
----
-
-# 📈 Future Improvements
-
-* Competition abstraction (league vs cup tracking)
-* Assist tracking
-* Advanced narrative tone logic
-* Role-based access
-* Async background AI jobs
-* Real AI API integration
-* Performance analytics
+* Narrative regeneration
+* Advanced analytics
+* Background job processing
+* Multi-provider AI switching
 
 ---
 
@@ -328,10 +304,10 @@ Not implemented yet:
 
 This project demonstrates:
 
-* Architectural maturity
-* Clean separation of concerns
-* Thoughtful domain modeling
-* AI system integration discipline
-* Real-world backend practices
+* Clean Architecture in practice
+* Domain-driven backend design
+* Structured AI integration (not prompt hacks)
+* Separation of concerns at scale
+* Thoughtful system boundaries
 
-It is intentionally backend-heavy to showcase engineering depth over UI flash.
+It is intentionally backend-focused to showcase engineering depth and system design clarity.
