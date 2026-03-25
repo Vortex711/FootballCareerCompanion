@@ -18,12 +18,21 @@ namespace FootballCareerCompanion.Application.UseCases.Seasons
 
         public async Task EndSeasonAsync(
             Guid seasonId, 
-            DateTime endDate)
+            DateTime? endDate)
         {
             var season = await _seasonRepository.GetByIdAsync(seasonId) ??
                 throw new InvalidOperationException("Season does not exist.");
 
-            season.EndSeason(endDate);
+            if (endDate == null)
+            {
+                if (!season.Matches.Any())
+                    throw new InvalidOperationException("Cannot end season without matches or explicit end date");
+                endDate = season.Matches.Max(m => m.PlayedAt);
+            }
+                
+                
+
+            season.EndSeason(endDate.Value);
             await _seasonRepository.UpdateAsync();
         }
     }

@@ -21,14 +21,18 @@ namespace FootballCareerCompanion.Application.UseCases.Seasons
             _orchestrator = orchestrator;
         }
 
-        public async Task<string> GenerateNarrativeAsync(Guid seasonId)
+        public async Task GenerateNarrativeAsync(Guid seasonId)
         {
             await _orchestrator.GenerateForSeasonAsync(seasonId);
 
-            var snapshot = await _repository.GetBySeasonIdAsync(seasonId)
-                ?? throw new InvalidOperationException("Narrative snapshot was not generated.");
+            return;
+        }
 
-            return snapshot.Content;
+        public async Task<string?> GetNarrativeAsync(Guid seasonId)
+        {
+            var snapshot = await _repository.GetBySeasonIdAsync(seasonId);
+
+            return snapshot?.Content;
         }
     }
 }

@@ -103,5 +103,15 @@ namespace FootballCareerCompanion.Infrastructure.Repositories
         {
             return await _db.Seasons.Where(s => s.CareerId == careerId).ToListAsync();
         }
+
+        public async Task<IReadOnlyList<Match>> GetMatchesBySeasonIdAsync(Guid seasonId)
+        {
+            return await _db.Matches
+                .Where(m => m.SeasonId == seasonId)
+                .Include(m => m.Season)
+                .ThenInclude(s => s.Career)
+                .OrderBy(m => m.PlayedAt)
+                .ToListAsync();
+        }
     }
 }

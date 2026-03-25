@@ -35,5 +35,7 @@ namespace FootballCareerCompanion.Application.Interfaces.Repositories
 
         Task<IReadOnlyList<Season>> GetSeasonsByCareerId(Guid careerId);
 
+        Task<IReadOnlyList<Match>> GetMatchesBySeasonIdAsync(Guid seasonId);
+
     }
 }

@@ -43,6 +43,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        });
+});
+
 builder.Services.AddAuthorization();
 
 //Swagger
@@ -62,6 +73,8 @@ builder.Services.AddScoped<CreateSeasonUseCase>();
 builder.Services.AddScoped<EndSeasonUseCase>();
 //   Get Seasons
 builder.Services.AddScoped<GetSeasonsUseCase>();
+//   Get Matches
+builder.Services.AddScoped<GetMatchesUseCase>();
 
 //Jwt Services
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
@@ -106,6 +119,8 @@ if (app.Environment.IsDevelopment())
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
 app.UseAuthorization();
